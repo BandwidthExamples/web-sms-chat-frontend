@@ -1,1 +1,5 @@
-<p>TODO: implement</p>
+<ul>
+	<li *ngFor="#m of messages | async">
+		<span>{{m.text}}</span>
+	</li>
+</ul>
