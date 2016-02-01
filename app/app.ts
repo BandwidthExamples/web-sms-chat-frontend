@@ -11,7 +11,7 @@ import {MessagesView} from './directives/messages';
 })
 export class SmsApp { 
   messageStore: MessageStore;
-  messages: any;//Promise<Message[]>;
+  messages: Promise<Message[]>;
   
   constructor(messageStore: MessageStore) {
     this.messageStore = messageStore;
