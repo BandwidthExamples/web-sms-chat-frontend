@@ -1,6 +1,5 @@
-<p>TODO: pretty view</p>
-<ul>
-	<li *ngFor="#item of items">
+<ol class="messages">
+	<li *ngFor="#item of items" [ngClass]="{self: item.direction == 'out', other: item.direction == 'in'}">
 		<message [item]="item"></message>
 	</li>
-</ul>
+</ol>

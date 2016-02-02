@@ -3,7 +3,6 @@
 
 <head>
   <title>Sms Chat</title>
-	<!-- 1. Load libraries -->
   <!-- IE required polyfills, in this exact order -->
   <script src="node_modules/es6-shim/es6-shim.min.js"></script>
   <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
@@ -13,7 +12,6 @@
   <script src="node_modules/rxjs/bundles/Rx.js"></script>
   <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
 
-  <!-- 2. Configure SystemJS -->
   <script>
     System.config({
       packages: {        
@@ -21,8 +19,19 @@
           format: "register",
           defaultExtension: "js"
         }
-      }
-    });
+      },
+	  paths: {
+		moment: "https://rawgit.com/moment/moment/2.11.1/moment.js"
+	  },
+	  meta: {
+		moment: {
+			format: "global",
+			globals: {
+				moment: "moment"
+			}
+		}
+	  }	  
+	});
     System.import("app/bootstrap").then(null, console.error.bind(console));
   </script>
 </head>

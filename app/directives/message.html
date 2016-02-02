@@ -1,1 +1,9 @@
-<span>{{item.text}} - from: {{item.from}} to: {{item.to}} -  TODO: pretty view</span>
+<div class="tail">
+</div>
+<div class="message">
+	<p>{{item.text}}</p>
+	<time> 
+		<span *ngIf="item.direction == 'in'">{{item.from}} • </span>
+		<span>{{item.time | fromNow}}</span>
+	</time>
+</div>
