@@ -10,11 +10,9 @@ import {MessagesView} from './directives/messages';
     providers: [MessageStore]
 })
 export class SmsApp { 
-  messageStore: MessageStore;
   messages: Promise<Message[]>;
   
-  constructor(messageStore: MessageStore) {
-    this.messageStore = messageStore;
+  constructor(private messageStore: MessageStore) {
     this.messages = messageStore.getMessages();
   }
 }

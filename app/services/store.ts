@@ -1,3 +1,5 @@
+import {Transport} from "./transport";
+
 export class MessageStore{
   
   //demo data
@@ -9,7 +11,7 @@ export class MessageStore{
   );
   
   getMessages(): Promise<Message[]>{
-    return new Promise((resolve, reject) => resolve(this.messages)); //simulate async operation
+    return Promise.resolve(this.messages); //simulate async operation
   }
 }
 
@@ -22,3 +24,4 @@ export interface Message{
   direction: string;
   state: string;
 }
+
