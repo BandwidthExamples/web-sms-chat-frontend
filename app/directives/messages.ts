@@ -21,7 +21,7 @@ class FromNowPipe implements PipeTransform {
   pipes: [FromNowPipe],
   templateUrl: "app/directives/message.html"
 })
-export class MessageView {}
+export class MessageView { }
 
 @Component({
   selector: "messages",
