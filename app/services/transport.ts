@@ -1,17 +1,9 @@
 export class Transport {
-  //TODO implement websocket communications here
   
-  static instance: Transport;
-  static isCreating: Boolean = false;
-
-  private authData: AuthData;
+  public authData: AuthData;
   private socket: WebSocket;
 
   constructor() {
-    if (!Transport.isCreating) { //supress to create instance directly
-      throw new Error("You can't call new in Transport instances!");
-    }
-    this.authData = JSON.parse(window.localStorage.getItem("authData"));
     this.socket = new WebSocket(this.buildWebSocketUrl());
     this.socket.addEventListener("message", (ev) => {
       let eventData = JSON.parse(ev.data);
@@ -30,31 +22,7 @@ export class Transport {
     });
   }
   
-  // return singleton instance
-  static getInstance() {
-    if (Transport.instance == null) {
-      Transport.isCreating = true;
-      Transport.instance = new Transport();
-      Transport.isCreating = false;
-    }
-    return Transport.instance;
-  }
-
-
-  signIn(authData: AuthData): Promise<void> {
-    return this.send("signIn", authData).then(() => {
-      this.authData = authData;
-      window.localStorage.setItem("authData", JSON.stringify(this.authData));
-    });
-  }
-
-  signOut(): Promise<void> {
-    return this.send("signOut").then(() => {
-      this.authData = null;
-      window.localStorage.removeItem("authData");
-    });
-  }
-
+  
   send(command: string, data: any = null): Promise<any> {
     return new Promise((resolve, reject) => {
       const id = Math.random();
@@ -114,6 +82,6 @@ export class Transport {
 
 export interface AuthData {
   userId: string;
-  accessToken: string;
-  accessSecret: string;
+  apiToken: string;
+  apiSecret: string;
 }

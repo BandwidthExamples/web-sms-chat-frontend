@@ -1,20 +1,22 @@
-import {Component} from "angular2/core";
+import {Component, provide} from "angular2/core";
 import {MessageStore, Message} from './services/store';
+import {AuthProvider} from './services/auth';
 import {Transport} from './services/transport';
 import {MessagesView} from './directives/messages';
+import {SignInFormView} from './directives/signInForm';
 
+let transport = new Transport();
 
 @Component({
   selector: "sms-app",
   templateUrl: "app/app.html",
-  directives: [MessagesView],
-  providers: [MessageStore]
+  directives: [MessagesView, SignInFormView],
+  providers: [MessageStore, provide(AuthProvider, {useValue: new AuthProvider(transport)}), provide(Transport, {useValue: transport})]
 })
 export class SmsApp {
   messages: Promise<Message[]>;
 
-  constructor(private messageStore: MessageStore) {
-    //Transport.getInstance();
+  constructor(private messageStore: MessageStore, public authProvider: AuthProvider) {
     this.messages = messageStore.getMessages();
   }
 }

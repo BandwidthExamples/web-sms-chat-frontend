@@ -1,2 +1,7 @@
-<messages [items]="messages | async">
-</messages>
+<signInForm [hidden]="authProvider.isAuthentificated">
+</signInForm>
+<div [hidden]="!authProvider.isAuthentificated">
+	<messages [items]="messages | async">
+	</messages>
+</div>	
+

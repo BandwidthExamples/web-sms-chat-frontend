@@ -1,0 +1,7 @@
+<div class="error" [hidden]="!error">{{error}}</div>
+<form #form="ngForm" (ngSubmit)="signIn(form.value)">
+    <input ngControl="userId" type="string" placeholder="User Id" required>
+	<input ngControl="apiToken" type="string" placeholder="Api Token" required>
+	<input ngControl="apiSecret" type="string" placeholder="Api Secret" required>
+    <button type="submit">Sign in</button>
+</form>

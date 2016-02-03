@@ -1,4 +1,4 @@
-import {Component, View, ViewEncapsulation, Pipe, PipeTransform} from "angular2/core";
+import {Component,  ViewEncapsulation, Pipe, PipeTransform} from "angular2/core";
 import * as moment_ from 'moment';
 
 // under systemjs, moment is actually exported as the default export, so we account for that
