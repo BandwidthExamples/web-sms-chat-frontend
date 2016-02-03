@@ -1,4 +1,4 @@
-<signInForm [hidden]="authProvider.isAuthentificated">
+<signInForm [hidden]="authProvider.isAuthentificated" (success)="loadData()">
 </signInForm>
 <div [hidden]="!authProvider.isAuthentificated">
 	<messages [items]="messages | async">

@@ -1,8 +1,8 @@
 import {Component,  ViewEncapsulation, Pipe, PipeTransform} from "angular2/core";
-import * as moment_ from 'moment';
+import * as moment_ from "moment";
 
 // under systemjs, moment is actually exported as the default export, so we account for that
-const moment = (<any>moment_)['default'] || moment_;
+const moment = (<any>moment_)["default"] || moment_;
 
 
 @Pipe({

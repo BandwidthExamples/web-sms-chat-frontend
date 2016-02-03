@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from "angular2/core";
+import {Component, ViewEncapsulation, EventEmitter, Output} from "angular2/core";
 import { FORM_DIRECTIVES } from 'angular2/common';
 import {AuthProvider} from '../services/auth';
 
@@ -11,13 +11,19 @@ import {AuthProvider} from '../services/auth';
 export class SignInFormView {
   constructor(private authProvider: AuthProvider) {
   }
+     
+  errorString: string;
   
-  error: string;
+  @Output() success: EventEmitter<any> = new EventEmitter();
+  @Output() error: EventEmitter<any> = new EventEmitter();
   
   signIn(data){
     return this.authProvider.signIn(data)
-    .catch((err)=>{
-      this.error = err.message || err;
+    .then(()=>{
+      this.success.emit(null);
+    }, (err)=>{
+      this.errorString = err.message || err;
+      this.error.emit(null);
     });
   }
  }

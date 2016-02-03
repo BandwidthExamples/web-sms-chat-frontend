@@ -17,6 +17,12 @@ export class SmsApp {
   messages: Promise<Message[]>;
 
   constructor(private messageStore: MessageStore, public authProvider: AuthProvider) {
-    this.messages = messageStore.getMessages();
+    if(authProvider.isAuthentificated){
+      this.loadData();
+    }
+  }
+  
+  loadData(){
+    this.messages = this.messageStore.getMessages();
   }
 }
