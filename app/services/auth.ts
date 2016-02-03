@@ -20,9 +20,9 @@ export class AuthProvider {
     });
   }
   
-  //isAuthentificated: Boolean = false;
   get isAuthentificated(): Boolean{
-    return !!this.transport.authData;
+    return true; 
+    //return !!this.transport.authData;
   }
   
 }

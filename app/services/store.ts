@@ -13,6 +13,10 @@ export class MessageStore {
   getMessages(): Promise<Message[]> {
     return Promise.resolve(this.messages); //simulate async operation
   }
+  
+  getPhoneNumber(): Promise<string>{
+    return Promise.resolve("+1234567890");
+  }
 }
 
 export interface Message {

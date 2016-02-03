@@ -3,6 +3,7 @@
 
 <head>
   <title>Sms Chat</title>
+  <meta name=viewport content="width=device-width, initial-scale=1">
   <!-- IE required polyfills, in this exact order -->
   <script src="node_modules/es6-shim/es6-shim.min.js"></script>
   <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
@@ -21,7 +22,7 @@
         }
       },
 	  paths: {
-		moment: "https://rawgit.com/moment/moment/2.11.1/moment.js"
+		moment: "node_modules/moment/moment.js"
 	  },
 	  meta: {
 		moment: {
@@ -34,10 +35,30 @@
 	});
     System.import("app/bootstrap").then(null, console.error.bind(console));
   </script>
+  <link rel="stylesheet" href="styles/style.css"/>
 </head>
 
 <body>
-	<sms-app>Loading...</sms-app>
+	<header class="bw-header">
+		<div class="bw-header-content">
+			<img class="bw-logo" src="https://s3.amazonaws.com/bandwidth-public-assets/bw_logo_white.svg"/>
+			<h1 class="bw-title">SMS Chat</h1>
+		</div>
+	</header>
+	<div class="bw-body">
+		<div class="bw-body-content">
+			<sms-app>Loading...</sms-app>
+		</div>
+	</div>
+	<footer class="bw-footer">
+		<div class="bw-footer-content">
+			<img class="bw-logo-small" src="https://s3.amazonaws.com/bandwidth-public-assets/bw_logo_white.svg"/>
+			<div class="bw-info">
+				<span class="bw-copyright">&copy; 2016 Bandwidth.com</span>
+				<a class="bw-home-link" href="www.bandwidth.com">www.bandwidth.com</a>
+			</div>
+		</div>
+	</footer>
 </body>
 
 </html>

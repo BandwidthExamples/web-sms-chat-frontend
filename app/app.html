@@ -1,7 +1,10 @@
 <signInForm [hidden]="authProvider.isAuthentificated" (success)="loadData()">
 </signInForm>
-<div [hidden]="!authProvider.isAuthentificated">
+<section [hidden]="!authProvider.isAuthentificated">
+	<div class="chat-title">
+		<h1>{{phoneNumber | async}}</h1>
+	</div>	
 	<messages [items]="messages | async">
 	</messages>
-</div>	
+</section>	
 

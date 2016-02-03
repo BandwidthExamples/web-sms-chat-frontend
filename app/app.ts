@@ -15,6 +15,7 @@ let transport = new Transport();
 })
 export class SmsApp {
   messages: Promise<Message[]>;
+  phoneNumber: Promise<string>;
 
   constructor(private messageStore: MessageStore, public authProvider: AuthProvider) {
     if(authProvider.isAuthentificated){
@@ -24,5 +25,6 @@ export class SmsApp {
   
   loadData(){
     this.messages = this.messageStore.getMessages();
+    this.phoneNumber = this.messageStore.getPhoneNumber();
   }
 }

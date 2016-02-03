@@ -1,0 +1,159 @@
+body,
+html {
+  margin: 0;
+  font-size: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  border-left: 4px solid #00bcec;
+  border-right: 4px solid #00bcec;
+}
+
+.bw-header {
+  background: #00bcec;
+  color: #F6FBFE;
+  font-family: sans-serif;
+  width: 100%;
+  height: 120px;
+  margin: 0;
+  padding: 24px 80px;
+  display: flex;
+}
+
+.bw-header .bw-header-content {
+  margin: auto 0;
+  display: flex;
+  height: auto;
+}
+
+.bw-header .bw-header-content .bw-logo {
+  margin: auto;
+  height: 64px;
+}
+
+.bw-header .bw-header-content .bw-title {
+  margin: auto 32px;
+  text-align: center;
+}
+
+@media (max-width: 1200px) {
+  .bw-header {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+@media only screen and (max-device-width: 667px) {
+  .bw-header {
+    height: 90vh;
+  }
+  .bw-header .bw-header-content {
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.bw-footer {
+  background: #00bcec;
+  color: #F6FBFE;
+  font-family: sans-serif;
+  width: 100%;
+  padding: 8px 80px;
+  height: 64px;
+  display: flex;
+}
+
+.bw-footer .bw-footer-content {
+  display: flex;
+  flex-direction: row;
+  margin: auto 0;
+}
+
+.bw-footer .bw-footer-content .bw-logo-small {
+  height: 32px;
+  margin: auto 12px auto 0px;
+}
+
+.bw-footer .bw-footer-content .bw-info {
+  margin: auto 0px;
+}
+
+.bw-footer .bw-footer-content .bw-info * {
+  display: block;
+}
+
+@media (max-width: 1200px) {
+  .bw-footer {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+.bw-body {
+  background: #C9D6DF;
+  display: flex;
+  min-height: calc(100vh - 120px - 64px);
+}
+
+@media only screen and (max-device-width: 667px) {
+  .bw-body {
+    min-height: calc(100vh - 90vh - 64px);
+  }
+}
+
+.bw-body .bw-body-content {
+  color: #1E2022;
+  font-family: sans-serif;
+  margin: 0px auto;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-device-width: 667px) {
+  .bw-body .bw-body-content {
+    max-width: 100%;
+  }
+}
+
+.bw-body-content section {
+  background: #F6FBFE;
+  padding: 32px 48px;
+  margin-bottom: 16px;
+}
+
+.bw-body-content section h1.bw-section-title {
+  background: #00bcec;
+  color: #F6FBFE;
+  padding: 16px;
+  width: auto;
+  position: relative;
+  z-index: 5;
+  left: -60px;
+  top: -16px;
+  display: block;
+  width: auto;
+}
+
+.bw-body-content section:first-child {
+  margin-top: 16px;
+}
+
+.chat-title{
+  color: white;
+  background: #1F2A44;
+  padding: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-title h1 {
+  display: inline;
+  font-size: 1.1rem;
+}
