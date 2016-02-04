@@ -171,3 +171,8 @@ body {
   background-color: #E8562E;
   border-color: #E04e27;
 }
+
+.well {
+    background-color: #ffffff;
+    border: 1px solid #e3e3e3;
+}
