@@ -4,38 +4,7 @@
 <head>
   <title>Sms Chat</title>
   <meta name=viewport content="width=device-width, initial-scale=1">
-  <!-- IE required polyfills, in this exact order -->
-  <script src="node_modules/es6-shim/es6-shim.min.js"></script>
-  <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
-
-  <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
-  <script src="node_modules/systemjs/dist/system.src.js"></script>
-  <script src="node_modules/rxjs/bundles/Rx.js"></script>
-  <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
-  <script src="node_modules/angular2/bundles/router.dev.js"></script>
-
-  <script>
-    System.config({
-      packages: {        
-        app: {
-          format: "register",
-          defaultExtension: "js"
-        }
-      },
-	  paths: {
-		moment: "node_modules/moment/moment.js"
-	  },
-	  meta: {
-		moment: {
-			format: "global",
-			globals: {
-				moment: "moment"
-			}
-		}
-	  }	  
-	});
-    System.import("app/bootstrap").then(null, console.error.bind(console));
-  </script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles/style.css"/>
 </head>
 
@@ -47,7 +16,7 @@
 		</div>
 	</header>
 	<div class="bw-body">
-		<div class="bw-body-content">
+		<div class="bw-body-content container">
 			<sms-app>Loading...</sms-app>
 		</div>
 	</div>
@@ -60,6 +29,22 @@
 			</div>
 		</div>
 	</footer>
+	<script src="node_modules/es6-shim/es6-shim.min.js"></script>
+	<script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+
+	<script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+	<script src="node_modules/systemjs/dist/system.src.js"></script>
+	<script src="node_modules/rxjs/bundles/Rx.js"></script>
+	<script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+	<script src="node_modules/angular2/bundles/router.dev.js"></script>
+	<script src="node_modules/ng2-bootstrap/bundles/ng2-bootstrap.min.js"></script>
+	<script src="config.js"></script>
+	
+
+	<script>
+		System.import("app/bootstrap").then(null, console.error.bind(console));
+	</script>
+
 </body>
 
 </html>

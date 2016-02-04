@@ -5,8 +5,7 @@ import {AuthProvider} from '../services/auth';
 @Component({
   selector: "signInForm",
   templateUrl: "app/components/signIn.html",
-  directives: [FORM_DIRECTIVES],
-  encapsulation: ViewEncapsulation.Native
+  directives: [FORM_DIRECTIVES]
 })
 export class SignInView {
   constructor(private authProvider: AuthProvider) {

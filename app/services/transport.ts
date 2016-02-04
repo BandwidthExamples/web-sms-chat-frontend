@@ -2,13 +2,19 @@ import {EventEmitter} from "angular2/core";
 
 export class Transport {
   
-  public authData: AuthData;
+  commandTimeout: number = 60; //timeout of execution a command in seconds
+  authData: AuthData;
   private socket: WebSocket;
+  
+  
   
   dataReceived: EventEmitter<DataReceivedEvent> = new EventEmitter();
 
-  constructor() {
-    /*this.socket = new WebSocket(this.buildWebSocketUrl());
+  private initSocket() {
+    if(this.socket){
+      return;
+    }
+    this.socket = new WebSocket(this.buildWebSocketUrl());
     this.socket.addEventListener("message", (ev) => {
       let eventData = JSON.parse(ev.data);
       this.dataReceived.emit(eventData);
@@ -19,11 +25,12 @@ export class Transport {
     });
     this.socket.addEventListener("close", (ev) => {
       console.error(`WebSocket connection has been closed with code ${ev.code}`);
-    });*/
+    });
   }
   
   
   send(command: string, data: any = null): Promise<any> {
+    this.initSocket();
     return new Promise((resolve, reject) => {
       const id = Math.random();
       const successEventName = `${command}.success.${id}`;
@@ -55,7 +62,7 @@ export class Transport {
           this.dataReceived.remove(handler);
           reject(new Error("Timeout"));
         }
-      }, 60000); // timeout 60 seconds per command
+      }, this.commandTimeout*1000); // check timeout
     });
   }
 
