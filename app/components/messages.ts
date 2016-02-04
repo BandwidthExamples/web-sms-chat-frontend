@@ -19,14 +19,14 @@ class FromNowPipe implements PipeTransform {
   selector: "message",
   inputs: ["item"],
   pipes: [FromNowPipe],
-  templateUrl: "app/directives/message.html"
+  templateUrl: "app/components/message.html"
 })
 export class MessageView { }
 
 @Component({
   selector: "messages",
   inputs: ["items"],
-  templateUrl: "app/directives/messages.html",
+  templateUrl: "app/components/messages.html",
   directives: [MessageView],
   styleUrls: ["styles/messages.css"],
   encapsulation: ViewEncapsulation.Native

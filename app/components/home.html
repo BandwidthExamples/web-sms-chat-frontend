@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-md-9">
+	  <p>
+		  <span>Conversation</span>
+		  <span [hidden]="selectedContacts.length < 2"> with {{selectedContacts.length}} contacts</span>
+		  <span [hidden]="selectedContacts.length != 1"> with {{selectedContacts[0]?.name}}</span> 
+	   <p>
+	  <messages [items]="messages | async">Loading ...</messages>
+  </div>
+  <div class="col-md-3">
+	  <div>Contacts<div>
+	  <div class="well well-sm" [hidden]="!addContactEditorVisible">
+		<button type="button" class="close" (click)="addContactEditorVisible=false;">
+  			<span aria-hidden="true">&times;</span>
+		</button>
+		<form #form="ngForm" (ngSubmit)="addContact(form.value); addContactEditorVisible=false;" class="form">
+			<div class="form-group">
+				<input ngControl="name" type="text" class="form-control" placeholder="Name" required autofocus>
+			</div>
+			<div class="form-group">
+				<input ngControl="phoneNumber" type="tel" class="form-control" placeholder="Phone Number" required>
+			</div>
+			<button type="submit" class="btn btn-primary btn-block">Add contact</button>
+		</form>
+	  </div>
+	  <button class="btn btn-default btn-block" (click)="addContactEditorVisible=true" [hidden]="addContactEditorVisible">Add contact</button>	
+	  <ul class="nav nav-pills nav-stacked">
+		<li *ngFor="#contact of contacts; #i=index" [ngClass]="{active: contact.selected}">
+			<a href="#" (click)="contact.selected = !contact.selected; contact.removeContactVisible=false;">{{contact.name}}</a>
+			<button type="button" class="close" (click)="contact.removeContactVisible=true;" [hidden]="contact.removeContactVisible">
+  				<span aria-hidden="true">&times;</span>
+			</button>
+			<div class="btn-group pull-rigth" [hidden]="!contact.removeContactVisible">
+				<button type="button" class="btn btn-danger btn-sm" (click)="removeContact(contact, i)">Remove</button>
+				<button type="button" class="btn btn-default btn-sm" (click)="contact.removeContactVisible=false">Leave</button>
+			</div>
+		</li>
+	  </ul>
+  </div>
+</div>

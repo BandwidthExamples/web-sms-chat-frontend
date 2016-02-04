@@ -157,3 +157,17 @@ body {
   display: inline;
   font-size: 1.1rem;
 }
+
+[hidden] {
+  display: none;
+}
+
+.btn-primary {
+  background-color: #00bcec;
+  border-color: #00b0e0;
+}
+
+.btn-primary:hover {
+  background-color: #E8562E;
+  border-color: #E04e27;
+}
