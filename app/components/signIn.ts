@@ -4,11 +4,11 @@ import {AuthProvider} from '../services/auth';
 
 @Component({
   selector: "signInForm",
-  templateUrl: "app/directives/signInForm.html",
+  templateUrl: "app/components/signIn.html",
   directives: [FORM_DIRECTIVES],
   encapsulation: ViewEncapsulation.Native
 })
-export class SignInFormView {
+export class SignInView {
   constructor(private authProvider: AuthProvider) {
   }
      

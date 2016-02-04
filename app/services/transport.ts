@@ -8,7 +8,7 @@ export class Transport {
   dataReceived: EventEmitter<DataReceivedEvent> = new EventEmitter();
 
   constructor() {
-    this.socket = new WebSocket(this.buildWebSocketUrl());
+    /*this.socket = new WebSocket(this.buildWebSocketUrl());
     this.socket.addEventListener("message", (ev) => {
       let eventData = JSON.parse(ev.data);
       this.dataReceived.emit(eventData);
@@ -19,7 +19,7 @@ export class Transport {
     });
     this.socket.addEventListener("close", (ev) => {
       console.error(`WebSocket connection has been closed with code ${ev.code}`);
-    });
+    });*/
   }
   
   

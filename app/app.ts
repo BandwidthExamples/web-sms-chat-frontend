@@ -1,30 +1,25 @@
-import {Component, provide} from "angular2/core";
-import {MessageStore, Message} from './services/store';
-import {AuthProvider} from './services/auth';
-import {Transport} from './services/transport';
-import {MessagesView} from './directives/messages';
-import {SignInFormView} from './directives/signInForm';
-
-let transport = new Transport();
+import {Component, provide, Injector} from "angular2/core";
+import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, APP_BASE_HREF, Router } from "angular2/router";
+import {MessageStore, Message} from "./services/store";
+import {AuthProvider} from "./services/auth";
+import {Transport} from "./services/transport";
+import {SignInView} from "./components/signIn";
+import {ContactsView} from "./components/contacts";
+import {HomeView} from "./components/home";
 
 @Component({
   selector: "sms-app",
-  templateUrl: "app/app.html",
-  directives: [MessagesView, SignInFormView],
-  providers: [MessageStore, provide(AuthProvider, {useValue: new AuthProvider(transport)}), provide(Transport, {useValue: transport})]
+  template: "<router-outlet></router-outlet>",
+  directives: [ROUTER_DIRECTIVES],
+  providers: [MessageStore, AuthProvider, provide(Transport, {useValue: new Transport() /*singleton*/}), ROUTER_PROVIDERS, provide(APP_BASE_HREF, {useValue : "/"})]
 })
+@RouteConfig([
+  { path: "/", as: "Home", component: HomeView},
+  { path: "/signin",  as: "SignIn",  component: SignInView },
+  { path: "/contacts",  as: "Contacts",  component: ContactsView }
+])
 export class SmsApp {
-  messages: Promise<Message[]>;
-  phoneNumber: Promise<string>;
-
-  constructor(private messageStore: MessageStore, public authProvider: AuthProvider) {
-    if(authProvider.isAuthentificated){
-      this.loadData();
-    }
-  }
-  
-  loadData(){
-    this.messages = this.messageStore.getMessages();
-    this.phoneNumber = this.messageStore.getPhoneNumber();
+  constructor(private authProvider: AuthProvider) {
+    AuthProvider.appInstance = authProvider; // it will be used to check if user authentificated by another components
   }
 }
