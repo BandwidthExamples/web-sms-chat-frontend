@@ -19,16 +19,18 @@ export class HomeView {
   
   constructor(private store: Store) {
     this.messages = store.getMessages();
-    this.contacts = store.getContacts();
+    let contacts = this.contacts = store.getContacts();
+    this.getContactName = ((phoneNumber) => {
+      let contact = <Contact>(contacts.filter((c)=>c.phoneNumber == phoneNumber)[0] || {});
+      return contact.name;
+    });
   }
   
   addContact(data){
-    this.resetTemporaryProperties();
     this.store.addContact(data);
   }
   
   removeContact(data, index){
-    this.resetTemporaryProperties();
     this.store.removeContact(index);
   }
   
@@ -36,10 +38,5 @@ export class HomeView {
     return this.contacts.filter((c) => (<any>c).selected);
   }
   
-  private resetTemporaryProperties(): void{
-    for(let c of this.contacts){
-      delete (<any>c).removeContactVisible;
-      delete (<any>c).selected;
-    }
-  }
+  getContactName: (phoneNumber: string) => string;
 }

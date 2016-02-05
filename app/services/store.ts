@@ -42,7 +42,7 @@ export class Store {
   }
   
   private saveContacts(contacts: Contact[]): void{
-    window.localStorage.setItem("contacts", JSON.stringify(contacts));
+    window.localStorage.setItem("contacts", JSON.stringify(contacts.map((c) => <Contact>{name: c.name, phoneNumber: c.phoneNumber})));
   }
   
   getPhoneNumber(): Promise<string>{

@@ -25,6 +25,7 @@ export class AuthProvider {
   }
   
   checkIfAuthentificated(): Promise<boolean>{
+    return Promise.resolve(true);
     if(this.transport.authData){
       return Promise.resolve(true);
     }

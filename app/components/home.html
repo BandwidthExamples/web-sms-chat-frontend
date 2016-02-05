@@ -1,14 +1,21 @@
 <div class="row">
   <div class="col-md-9">
-	  <p>
-		  <span>Conversation</span>
-		  <span [hidden]="selectedContacts.length < 2"> with {{selectedContacts.length}} contacts</span>
-		  <span [hidden]="selectedContacts.length != 1"> with {{selectedContacts[0]?.name}}</span> 
-	   <p>
-	  <messages [items]="messages | async">Loading ...</messages>
+	  <div class="chat-title">
+			<h1>
+				<span>Conversation</span>
+				<span [hidden]="selectedContacts.length < 2"> with {{selectedContacts.length}} contacts</span>
+				<span [hidden]="selectedContacts.length != 1"> with {{selectedContacts[0]?.name}}</span> 
+			</h1>
+	   </div>	    
+	  <messages [items]="messages | async" [getContactName]="getContactName">Loading ...</messages>
   </div>
   <div class="col-md-3">
-	  <div>Contacts<div>
+	  <div class="chat-title">
+		  <h1>Contacts</h1>
+		  <button class="btn btn-primary btn-xs pull-right" (click)="addContactEditorVisible=true" [hidden]="addContactEditorVisible">
+			  <span class="glyphicon glyphicon-plus"></span>
+		  </button>
+	  </div>
 	  <div class="well well-sm" [hidden]="!addContactEditorVisible">
 		<button type="button" class="close" (click)="addContactEditorVisible=false;">
   			<span aria-hidden="true">&times;</span>
@@ -23,16 +30,18 @@
 			<button type="submit" class="btn btn-primary btn-block">Add contact</button>
 		</form>
 	  </div>
-	  <button class="btn btn-default btn-block" (click)="addContactEditorVisible=true" [hidden]="addContactEditorVisible">Add contact</button>	
-	  <ul class="nav nav-pills nav-stacked">
-		<li *ngFor="#contact of contacts; #i=index" [ngClass]="{active: contact.selected}">
-			<a href="#" (click)="contact.selected = !contact.selected; contact.removeContactVisible=false;">{{contact.name}}</a>
-			<button type="button" class="close" (click)="contact.removeContactVisible=true;" [hidden]="contact.removeContactVisible">
-  				<span aria-hidden="true">&times;</span>
+	  <ul class="contacts">
+		<li *ngFor="#contact of contacts; #i=index" [ngClass]="{active: contact.selected}" (click)="contact.selected = !contact.selected; contact.removeContactVisible=false;">
+			<div class="contact-info" >
+				<div class="contact-name">{{contact.name}}</div>
+				<div class="contact-phone-number">{{contact.phoneNumber}}</div>
+			</div>
+			<button type="button" class="btn btn-danger btn-xs pull-right" (click)="contact.removeContactVisible=true; $event.stopPropagation();" [hidden]="contact.removeContactVisible">
+  				<span class="glyphicon glyphicon-trash"></span>
 			</button>
-			<div class="btn-group pull-rigth" [hidden]="!contact.removeContactVisible">
-				<button type="button" class="btn btn-danger btn-sm" (click)="removeContact(contact, i)">Remove</button>
-				<button type="button" class="btn btn-default btn-sm" (click)="contact.removeContactVisible=false">Leave</button>
+			<div class="btn-group pull-right" [hidden]="!contact.removeContactVisible" (click)="$event.stopPropagation();">
+				<button type="button" class="btn btn-danger btn-xs" (click)="removeContact(contact, i)">Remove</button>
+				<button type="button" class="btn btn-default btn-xs" (click)="contact.removeContactVisible=false">Leave</button>
 			</div>
 		</li>
 	  </ul>

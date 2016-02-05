@@ -176,3 +176,35 @@ body {
     background-color: #ffffff;
     border: 1px solid #e3e3e3;
 }
+
+.contacts{
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.contacts li{
+  margin: 2px 4px;
+  border: 1px solid #676767;
+  background: white;
+  padding: 10px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.contacts li.active{
+  background-color: #00bcec;
+  border-color: #00b0e0;
+  color: #ffffff;
+}
+
+.contacts li .contact-info{
+  display: inline-block;
+}
+
+.contacts .contact-name{
+  font-size: 110%;
+}
+
+.contacts .contact-phone-number{
+  font-size: 70%;
+}
