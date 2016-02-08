@@ -19,6 +19,7 @@ export class HomeView {
   contacts: Contact[];
   messages: Message[] = new Array<Message>();
   newContact: Contact = <Contact>{};
+  newMessage: Message = <Message>{};
   
   constructor(private store: Store) {
     store.getMessages().then((messages) => this.messages = messages );
@@ -50,6 +51,9 @@ export class HomeView {
       return selectedNumbers.indexOf(m.from) >= 0 || selectedNumbers.indexOf(m.to) >= 0; 
     });
   }
-  
   getContactName: (phoneNumber: string) => string;
+  
+  sendMessage(){
+    
+  }
 }

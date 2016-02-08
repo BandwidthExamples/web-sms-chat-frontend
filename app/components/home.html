@@ -1,49 +1,60 @@
 <div class="conversation-container">
-  <div class="chat">
-	  <div class="chat-title">
+	<div class="chat">
+		<div class="chat-title">
 			<h1>
 				<span>Conversation</span>
 				<span [hidden]="selectedContacts.length < 2"> with {{selectedContacts.length}} contacts</span>
 				<span [hidden]="selectedContacts.length != 1"> with {{selectedContacts[0]?.name}}</span> 
 			</h1>
-	   </div>	    
-	  <messages [items]="messagesToShow" [getContactName]="getContactName">Loading ...</messages>
-  </div>
-  <div class="contacts-container">
-	  <div class="chat-title">
-		  <h1>Contacts</h1>
-		  <button class="btn btn-primary btn-xs pull-right" (click)="newContact = {}; addContactEditorVisible=true" [hidden]="addContactEditorVisible">
-			  <span class="glyphicon glyphicon-plus"></span>
-		  </button>
-	  </div>
-	  <div class="well well-sm contact-editor" [hidden]="!addContactEditorVisible">
-		<button type="button" class="close" (click)="addContactEditorVisible=false;">
-  			<span aria-hidden="true">&times;</span>
-		</button>
-		<form #form="ngForm" (ngSubmit)="addContact(); addContactEditorVisible=false;" class="form">
-			<div class="form-group">
-				<input [(ngModel)]="newContact.name" ngControl="name" type="text" class="form-control" placeholder="Name" required autofocus>
-			</div>
-			<div class="form-group">
-				<input [(ngModel)]="newContact.phoneNumber" ngControl="phoneNumber" type="tel" class="form-control" placeholder="Phone Number" required>
-			</div>
-			<button type="submit" class="btn btn-primary btn-block">Add contact</button>
-		</form>
-	  </div>
-	  <ul class="contacts">
-		<li *ngFor="#contact of contacts; #i=index" [ngClass]="{active: contact.selected}" (click)="contact.selected = !contact.selected; contact.removeContactVisible=false;">
-			<div class="contact-info" >
-				<div class="contact-name">{{contact.name}}</div>
-				<div class="contact-phone-number">{{contact.phoneNumber}}</div>
-			</div>
-			<button type="button" class="btn btn-danger btn-xs pull-right" (click)="contact.removeContactVisible=true; $event.stopPropagation();" [hidden]="contact.removeContactVisible">
-  				<span class="glyphicon glyphicon-trash"></span>
+		</div>
+		<messages [items]="messagesToShow" [getContactName]="getContactName">Loading ...</messages>
+		<form #form="ngForm" (ngSubmit)="sendMessage();" class="message-editor" *ngIf="selectedContacts.length == 1">
+			<input [(ngModel)]="newMessage.text" ngControl="text" type="text" class="form-control" placeholder="Message" required autofocus>
+			<button type="submit" class="btn btn-primary">
+				<span class="glyphicon glyphicon-envelope"></span>
 			</button>
-			<div class="btn-group pull-right" [hidden]="!contact.removeContactVisible" (click)="$event.stopPropagation();">
-				<button type="button" class="btn btn-danger btn-xs" (click)="removeContact(contact, i)">Remove</button>
-				<button type="button" class="btn btn-default btn-xs" (click)="contact.removeContactVisible=false">Leave</button>
-			</div>
-		</li>
-	  </ul>
-  </div>
+		</form>
+		<div *ngIf="selectedContacts.length != 1" class="message-editor message-editor-warning">
+			<p>Select only 1 contact to have ability to send a message</p>
+		</div>
+	</div>
+	<div class="contacts-container">
+		<div class="chat-title">
+			<h1>Contacts</h1>
+			<button class="btn btn-primary btn-xs pull-right" (click)="newContact = {}; addContactEditorVisible=true" [hidden]="addContactEditorVisible">
+				<span class="glyphicon glyphicon-plus"></span>
+			</button>
+		</div>
+		<div class="well well-sm contact-editor" [hidden]="!addContactEditorVisible">
+			<button type="button" class="close" (click)="addContactEditorVisible=false;">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<form #form="ngForm" (ngSubmit)="addContact(); addContactEditorVisible=false;" class="form">
+				<div class="form-group">
+					<input [(ngModel)]="newContact.name" ngControl="name" type="text" class="form-control" placeholder="Name" required autofocus>
+				</div>
+				<div class="form-group">
+					<input [(ngModel)]="newContact.phoneNumber" ngControl="phoneNumber" type="tel" class="form-control" placeholder="Phone Number"
+					required>
+				</div>
+				<button type="submit" class="btn btn-primary btn-block">Add contact</button>
+			</form>
+		</div>
+		<ul class="contacts">
+			<li *ngFor="#contact of contacts; #i=index" [ngClass]="{active: contact.selected}" (click)="contact.selected = !contact.selected; contact.removeContactVisible=false;">
+				<div class="contact-info">
+					<div class="contact-name">{{contact.name}}</div>
+					<div class="contact-phone-number">{{contact.phoneNumber}}</div>
+				</div>
+				<button type="button" class="btn btn-default btn-xs pull-right" (click)="contact.removeContactVisible=true; $event.stopPropagation();"
+				[hidden]="contact.removeContactVisible">
+					<span class="glyphicon glyphicon-trash"></span>
+				</button>
+				<div class="btn-group pull-right" [hidden]="!contact.removeContactVisible" (click)="$event.stopPropagation();">
+					<button type="button" class="btn btn-danger btn-xs" (click)="removeContact(contact, i)">Remove</button>
+					<button type="button" class="btn btn-default btn-xs" (click)="contact.removeContactVisible=false">Leave</button>
+				</div>
+			</li>
+		</ul>
+	</div>
 </div>

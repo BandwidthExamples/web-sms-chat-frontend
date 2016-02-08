@@ -168,7 +168,7 @@ body {
 }
 
 .contacts li{
-  margin: 4px;
+  margin: 4px 2px;
   border: 1px solid #676767;
   background: white;
   padding: 10px;
@@ -214,11 +214,36 @@ body {
 } 
 
 .conversation-container .chat .messages{
-  height: calc(100% - 40px);  
+  height: calc(100% - 40px - 32px);  
   overflow-x: hidden;
   overflow-y: auto;
   background: radial-gradient(ellipse at center, rgba(0,0,0,0.1) 0%, #676767 100%); 
 }
+
+.conversation-container .chat .message-editor{
+  height: 33px;
+  display: flex;
+}
+
+.conversation-container .chat .message-editor-warning{
+  color: white;
+  background: #1F2A44;
+  padding: 0.5rem;
+}
+
+
+.conversation-container .chat .message-editor button{
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+.conversation-container .chat .message-editor input{
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+
+
 
 .conversation-container .contacts-container .contact-editor{
   position: absolute;
@@ -231,4 +256,3 @@ body {
   width: 220px;
   background: linear-gradient(0deg, #676767, rgba(0,0,0,0.15));
 }
-
