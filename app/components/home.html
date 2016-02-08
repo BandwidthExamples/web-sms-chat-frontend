@@ -12,7 +12,7 @@
   <div class="contacts-container">
 	  <div class="chat-title">
 		  <h1>Contacts</h1>
-		  <button class="btn btn-primary btn-xs pull-right" (click)="addContactEditorVisible=true" [hidden]="addContactEditorVisible">
+		  <button class="btn btn-primary btn-xs pull-right" (click)="newContact = {}; addContactEditorVisible=true" [hidden]="addContactEditorVisible">
 			  <span class="glyphicon glyphicon-plus"></span>
 		  </button>
 	  </div>
@@ -20,12 +20,12 @@
 		<button type="button" class="close" (click)="addContactEditorVisible=false;">
   			<span aria-hidden="true">&times;</span>
 		</button>
-		<form #form="ngForm" (ngSubmit)="addContact(form.value); addContactEditorVisible=false;" class="form">
+		<form #form="ngForm" (ngSubmit)="addContact(); addContactEditorVisible=false;" class="form">
 			<div class="form-group">
-				<input ngControl="name" type="text" class="form-control" placeholder="Name" required autofocus>
+				<input [(ngModel)]="newContact.name" ngControl="name" type="text" class="form-control" placeholder="Name" required autofocus>
 			</div>
 			<div class="form-group">
-				<input ngControl="phoneNumber" type="tel" class="form-control" placeholder="Phone Number" required>
+				<input [(ngModel)]="newContact.phoneNumber" ngControl="phoneNumber" type="tel" class="form-control" placeholder="Phone Number" required>
 			</div>
 			<button type="submit" class="btn btn-primary btn-block">Add contact</button>
 		</form>

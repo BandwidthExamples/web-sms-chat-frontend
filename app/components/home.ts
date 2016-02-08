@@ -37,6 +37,7 @@ class AvoidAngularBugPipe implements PipeTransform {
 export class HomeView {
   contacts: Contact[];
   messages: Message[] = new Array<Message>();
+  newContact: Contact = <Contact>{};
   
   constructor(private store: Store) {
     store.getMessages().then((messages) => this.messages = messages );
@@ -47,8 +48,8 @@ export class HomeView {
     });
   }
   
-  addContact(data){
-    this.store.addContact(data);
+  addContact(){
+    this.store.addContact(this.newContact);
   }
   
   removeContact(data, index){
