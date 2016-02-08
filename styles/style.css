@@ -168,7 +168,7 @@ body {
 }
 
 .contacts li{
-  margin: 2px 4px;
+  margin: 4px;
   border: 1px solid #676767;
   background: white;
   padding: 10px;
@@ -229,5 +229,6 @@ body {
 
 .conversation-container .contacts-container .contacts{
   width: 220px;
+  background: linear-gradient(0deg, #676767, rgba(0,0,0,0.15));
 }
 

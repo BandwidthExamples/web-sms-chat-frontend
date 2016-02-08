@@ -38,7 +38,13 @@ export class Store {
     if(this.contacts){
       return this.contacts;
     }
-    return this.contacts = (JSON.parse(window.localStorage.getItem("contacts")) || new Array<Contact>());
+    this.contacts = (JSON.parse(window.localStorage.getItem("contacts")) || new Array<Contact>());
+    this.contacts.sort((a: Contact, b: Contact) => {
+      if(a.name < b.name) return -1;
+      if(a.name == b.name) return 0;
+      return 1;
+    });
+    return this.contacts;
   }
   
   private saveContacts(contacts: Contact[]): void{
