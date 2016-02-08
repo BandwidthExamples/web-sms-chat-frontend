@@ -47,7 +47,7 @@ export class MessageView {
   templateUrl: "app/components/messages.html",
   directives: [MessageView],
   styleUrls: ["styles/messages.css"],
-  encapsulation: ViewEncapsulation.Native
+  encapsulation: ViewEncapsulation.None
 })
 export class MessagesView {
   @Input() getContactName: (phoneNumber: string) => string

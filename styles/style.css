@@ -47,16 +47,7 @@ body {
   }
 }
 
-@media only screen and (max-device-width: 667px) {
-  .bw-header {
-    height: 90vh;
-  }
-  .bw-header .bw-header-content {
-    flex-direction: column;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
+
 
 .bw-footer {
   background: #00bcec;
@@ -100,11 +91,6 @@ body {
   min-height: calc(100vh - 120px - 64px);
 }
 
-@media only screen and (max-device-width: 667px) {
-  .bw-body {
-    min-height: calc(100vh - 90vh - 64px);
-  }
-}
 
 .bw-body .bw-body-content {
   color: #1E2022;
@@ -116,11 +102,6 @@ body {
   flex-direction: column;
 }
 
-@media only screen and (max-device-width: 667px) {
-  .bw-body .bw-body-content {
-    max-width: 100%;
-  }
-}
 
 .bw-body-content section {
   background: #F6FBFE;
@@ -151,6 +132,7 @@ body {
   padding: 0.5rem;
   position: relative;
   overflow: hidden;
+  height: 40px;
 }
 
 .chat-title h1 {
@@ -180,6 +162,9 @@ body {
 .contacts{
     list-style-type: none;
     padding-left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: calc(100% - 40px);
 }
 
 .contacts li{
@@ -208,3 +193,41 @@ body {
 .contacts .contact-phone-number{
   font-size: 70%;
 }
+
+.conversation-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.conversation-container .chat, .contacts-container{
+  border: 1px solid #676767;
+  height: calc(100vh - 120px - 64px );
+} 
+
+
+.conversation-container .chat{
+  width: calc(100vw - 220px);
+  min-width: 220px;
+} 
+
+.conversation-container .chat .messages{
+  height: calc(100% - 40px);  
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.1) 0%, #676767 100%); 
+}
+
+.conversation-container .contacts-container .contact-editor{
+  position: absolute;
+  width: 220px;
+  border: 1px solid #00b0e0;
+  z-index: 99;
+}
+
+.conversation-container .contacts-container .contacts{
+  width: 220px;
+}
+

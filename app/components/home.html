@@ -1,5 +1,5 @@
-<div class="row">
-  <div class="col-md-9">
+<div class="conversation-container">
+  <div class="chat">
 	  <div class="chat-title">
 			<h1>
 				<span>Conversation</span>
@@ -9,14 +9,14 @@
 	   </div>	    
 	  <messages [items]="messagesToShow | avoidAngularBug" [getContactName]="getContactName">Loading ...</messages>
   </div>
-  <div class="col-md-3">
+  <div class="contacts-container">
 	  <div class="chat-title">
 		  <h1>Contacts</h1>
 		  <button class="btn btn-primary btn-xs pull-right" (click)="addContactEditorVisible=true" [hidden]="addContactEditorVisible">
 			  <span class="glyphicon glyphicon-plus"></span>
 		  </button>
 	  </div>
-	  <div class="well well-sm" [hidden]="!addContactEditorVisible">
+	  <div class="well well-sm contact-editor" [hidden]="!addContactEditorVisible">
 		<button type="button" class="close" (click)="addContactEditorVisible=false;">
   			<span aria-hidden="true">&times;</span>
 		</button>
