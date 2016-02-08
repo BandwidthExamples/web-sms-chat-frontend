@@ -7,7 +7,7 @@
 				<span [hidden]="selectedContacts.length != 1"> with {{selectedContacts[0]?.name}}</span> 
 			</h1>
 	   </div>	    
-	  <messages [items]="messagesToShow | avoidAngularBug" [getContactName]="getContactName">Loading ...</messages>
+	  <messages [items]="messagesToShow" [getContactName]="getContactName">Loading ...</messages>
   </div>
   <div class="contacts-container">
 	  <div class="chat-title">

@@ -5,30 +5,11 @@ import {AuthProvider} from "../services/auth";
 import {Store, Contact, Message} from "../services/store";
 import {MessagesView} from "./messages";
 
-/*
- Pipe `avoidAngularBug` was created to avoid angular2.beta2 bug with throwing in dev mode an exception "EXCEPTION: Expression XXXXXX has changed after it was checked".
- https://github.com/angular/angular/issues/5950
- Please remove it after angular2 released.   
-*/
-@Pipe({
-  name: "avoidAngularBug"
-})
-class AvoidAngularBugPipe implements PipeTransform {
-  private items: Array<any> = new Array<any>();
-  transform(value: Array<any>, args: any[]) {
-    this.items.splice(0, this.items.length);
-    for(let item of value){
-      this.items.push(item);
-    }
-    return this.items; //we should return same object to avoid an exception
-  }
-}
 
 
 @Component({
   selector: "home",
   directives: [FORM_DIRECTIVES, MessagesView],
-  pipes: [AvoidAngularBugPipe],
   templateUrl: "app/components/home.html"
 })
 @CanActivate((next, previous) => {
