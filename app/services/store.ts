@@ -59,7 +59,7 @@ export class Store {
 }
 
 export interface Message {
-  id: string;
+  messageId: string;
   from: string;
   to: string;
   text: string;

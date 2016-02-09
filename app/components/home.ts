@@ -1,8 +1,9 @@
-import {Component, Injector, Pipe, PipeTransform} from "angular2/core";
+import {Component, Injector, Pipe, PipeTransform, OnDestroy } from "angular2/core";
 import {CanActivate} from "angular2/router";
 import {FORM_DIRECTIVES} from 'angular2/common';
 import {AuthProvider} from "../services/auth";
 import {Store, Contact, Message, UserData} from "../services/store";
+import {Transport} from "../services/transport";
 import {MessagesView} from "./messages";
 
 
@@ -15,14 +16,15 @@ import {MessagesView} from "./messages";
 @CanActivate((next, previous) => {
   return AuthProvider.appInstance.checkIfAuthentificated();
 })
-export class HomeView {
+export class HomeView implements OnDestroy {
   contacts: Contact[];
   messages: Message[] = new Array<Message>();
   newContact: Contact = <Contact>{};
   newMessage: Message = <Message>{};
   userData: UserData;
+  subscription: any;
   
-  constructor(private store: Store) {
+  constructor(private store: Store, transport: Transport) {
     store.getMessages().then((messages) => this.messages = messages );
     this.userData = store.getUserData();
     let contacts = this.contacts = store.getContacts();
@@ -30,6 +32,24 @@ export class HomeView {
       let contact = <Contact>(contacts.filter((c)=>c.phoneNumber == phoneNumber)[0] || {});
       return contact.name;
     });
+    
+    //handle incoming messages (and state of sent messages)
+    this.subscription = transport.dataReceived.subscribe(ev => {
+       if(ev.eventName == "message"){
+         let message = <Message>ev.data;
+         let existingMessage = this.messages.filter(m=>m.messageId == message.messageId)[0];
+         if(existingMessage){
+           existingMessage.state = message.state; //update state of exiting message
+         }
+         else{
+           this.messages.unshift(message);
+         }
+       }
+    });
+  }
+  
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
   }
   
   addContact(){

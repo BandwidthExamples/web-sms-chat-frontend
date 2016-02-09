@@ -6,8 +6,6 @@ export class Transport {
   authData: AuthData;
   private socket: WebSocket;
 
-
-
   dataReceived: EventEmitter<DataReceivedEvent> = new EventEmitter(true);
 
   private initSocket(): Promise<void> {
