@@ -4,28 +4,20 @@ import {Injectable} from "angular2/core";
 
 @Injectable()
 export class AuthProvider {
-
   constructor(private transport: Transport, private router: Router) {
     transport.authData = JSON.parse(window.localStorage.getItem("authData"));
   }
   
   signIn(authData: AuthData): Promise<void> {
-    return this.transport.send("signIn", authData).then(() => {
+    return this.transport.send("signIn", authData).then((data) => {
       this.transport.authData = authData;
       window.localStorage.setItem("authData", JSON.stringify(this.transport.authData));
-    });
-  }
-
-  signOut(): Promise<void> {
-    return this.transport.send("signOut").then(() => {
-      this.transport.authData = null;
-      window.localStorage.removeItem("authData");
-      this.router.navigate(["SignIn"]);
+      window.localStorage.setItem("userData", JSON.stringify(data));
+      return data;
     });
   }
   
   checkIfAuthentificated(): Promise<boolean>{
-    return Promise.resolve(true);
     if(this.transport.authData){
       return Promise.resolve(true);
     }
@@ -33,7 +25,7 @@ export class AuthProvider {
     return Promise.resolve(false);
   }
   
-  static appInstance: AuthProvider; //global app instance
+  static appInstance: AuthProvider; //global instance (to use it in attributes)
   
 }
 

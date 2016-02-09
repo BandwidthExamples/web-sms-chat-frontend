@@ -2,7 +2,7 @@ import {Component, Injector, Pipe, PipeTransform} from "angular2/core";
 import {CanActivate} from "angular2/router";
 import {FORM_DIRECTIVES} from 'angular2/common';
 import {AuthProvider} from "../services/auth";
-import {Store, Contact, Message} from "../services/store";
+import {Store, Contact, Message, UserData} from "../services/store";
 import {MessagesView} from "./messages";
 
 
@@ -20,9 +20,11 @@ export class HomeView {
   messages: Message[] = new Array<Message>();
   newContact: Contact = <Contact>{};
   newMessage: Message = <Message>{};
+  userData: UserData;
   
   constructor(private store: Store) {
     store.getMessages().then((messages) => this.messages = messages );
+    this.userData = store.getUserData();
     let contacts = this.contacts = store.getContacts();
     this.getContactName = ((phoneNumber) => {
       let contact = <Contact>(contacts.filter((c)=>c.phoneNumber == phoneNumber)[0] || {});

@@ -51,8 +51,8 @@ export class Store {
     window.localStorage.setItem("contacts", JSON.stringify(contacts.map((c) => <Contact>{name: c.name, phoneNumber: c.phoneNumber})));
   }
   
-  getPhoneNumber(): Promise<string>{
-    return Promise.resolve("+1234567890");
+  getUserData(): UserData{
+    return <UserData>JSON.parse(window.localStorage.getItem("userData"));
   }
 }
 
@@ -69,5 +69,9 @@ export interface Message {
 export interface Contact {
   name: string;
   phoneNumber: string;
+}
+
+export interface UserData {
+  phoneNumber: string;  
 }
 

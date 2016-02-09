@@ -2,7 +2,7 @@
 	<div class="chat">
 		<div class="chat-title">
 			<h1>
-				<span>Conversation</span>
+				<span>{{userData.phoneNumber}}: Conversation</span>
 				<span [hidden]="selectedContacts.length < 2"> with {{selectedContacts.length}} contacts</span>
 				<span [hidden]="selectedContacts.length != 1"> with {{selectedContacts[0]?.name}}</span> 
 			</h1>

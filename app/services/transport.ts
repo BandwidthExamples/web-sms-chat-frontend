@@ -1,68 +1,74 @@
 import {EventEmitter} from "angular2/core";
 
 export class Transport {
-  
+
   commandTimeout: number = 60; //timeout of execution a command in seconds
   authData: AuthData;
   private socket: WebSocket;
-  
-  
-  
-  dataReceived: EventEmitter<DataReceivedEvent> = new EventEmitter();
 
-  private initSocket() {
-    if(this.socket){
-      return;
+
+
+  dataReceived: EventEmitter<DataReceivedEvent> = new EventEmitter(true);
+
+  private initSocket(): Promise<void> {
+    if (this.socket) {
+      return Promise.resolve();
     }
-    this.socket = new WebSocket(this.buildWebSocketUrl());
-    this.socket.addEventListener("message", (ev) => {
-      let eventData = JSON.parse(ev.data);
-      this.dataReceived.emit(eventData);
-    });
-    this.socket.addEventListener("error", (ev) => {
-      console.error(ev.message);
-      //TODO handle this error
-    });
-    this.socket.addEventListener("close", (ev) => {
-      console.error(`WebSocket connection has been closed with code ${ev.code}`);
+    return new Promise<void>((resolve, reject) => {
+      this.socket = new WebSocket(this.buildWebSocketUrl());
+      this.socket.addEventListener("open", (ev) => {
+        resolve();
+      });
+      this.socket.addEventListener("message", (ev) => {
+        let eventData = JSON.parse(ev.data);
+        this.dataReceived.emit(eventData);
+      });
+      this.socket.addEventListener("error", (ev) => {
+        console.error(ev.message);
+        reject(ev.message);
+      });
+      this.socket.addEventListener("close", (ev) => {
+        console.error(`WebSocket connection has been closed with code ${ev.code}`);
+        this.socket = null;
+      });
     });
   }
-  
-  
+
+
   send(command: string, data: any = null): Promise<any> {
-    this.initSocket();
-    return new Promise((resolve, reject) => {
-      const id = Math.random();
-      const successEventName = `${command}.success.${id}`;
-      const errorEventName = `${command}.error.${id}`;
-      
-      let isCompleted = false;
-      let handler = (ev: DataReceivedEvent) => {
-        if(ev.eventName != successEventName && ev.eventName != errorEventName){
-          return;
-        }
-        this.dataReceived.remove(handler);
-        isCompleted = true;
-        if(ev.eventName == successEventName){
-          resolve(ev.data);  
-        }
-        else{
-          reject(ev.data);  
-        }
-      };
-      this.dataReceived.add(handler);
-      this.socket.send(JSON.stringify({
-        auth: this.authData,
-        command: command,
-        data: data,
-        id: id
-      }));
-      setTimeout(() => {
-        if (!isCompleted) {
-          this.dataReceived.remove(handler);
-          reject(new Error("Timeout"));
-        }
-      }, this.commandTimeout*1000); // check timeout
+    return this.initSocket().then(()=>{
+      return new Promise((resolve, reject) => {
+        const id = Math.random();
+        const successEventName = `${command}.success.${id}`;
+        const errorEventName = `${command}.error.${id}`;
+
+        let isCompleted = false;
+        let subscription = this.dataReceived.subscribe((ev: DataReceivedEvent) => {
+          if (ev.eventName != successEventName && ev.eventName != errorEventName) {
+            return;
+          }
+          isCompleted = true;
+          subscription.unsubscribe();
+          if (ev.eventName == successEventName) {
+            resolve(ev.data);
+          }
+          else {
+            reject(ev.data);
+          }
+        })
+        this.socket.send(JSON.stringify({
+          auth: this.authData,
+          command: command,
+          data: data,
+          id: id
+        }));
+        setTimeout(() => {
+          if (!isCompleted) {
+            subscription.unsubscribe();
+            reject(new Error("Timeout"));
+          }
+        }, this.commandTimeout * 1000); // check timeout
+      });
     });
   }
 
@@ -81,7 +87,7 @@ export interface AuthData {
   apiSecret: string;
 }
 
-export interface DataReceivedEvent{
+export interface DataReceivedEvent {
   eventName: string,
   data: any
 }
