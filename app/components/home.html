@@ -15,7 +15,7 @@
 			</button>
 		</form>
 		<div *ngIf="selectedContacts.length != 1" class="message-editor message-editor-warning">
-			<p>Select only 1 contact to have ability to send a message</p>
+			<p>Select <span [hidden]="selectedContacts.length < 2">only 1</span><span [hidden]="selectedContacts.length >= 2">a</span> contact to have ability to send a message</p>
 		</div>
 	</div>
 	<div class="contacts-container">
