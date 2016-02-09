@@ -56,6 +56,11 @@ export class HomeView {
   getContactName: (phoneNumber: string) => string;
   
   sendMessage(){
-    
+    this.newMessage.to = this.selectedContacts[0].phoneNumber  
+    this.store.addMessage(this.newMessage).then(message=>{
+      this.messages.unshift(message);
+      this.newMessage = <Message>{};
+    });
+    //TODO handle success/error
   }
 }

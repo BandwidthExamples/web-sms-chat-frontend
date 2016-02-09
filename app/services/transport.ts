@@ -35,7 +35,7 @@ export class Transport {
   }
 
 
-  send(command: string, data: any = null): Promise<any> {
+  execute(command: string, data: any = null): Promise<any> {
     return this.initSocket().then(()=>{
       return new Promise((resolve, reject) => {
         const id = Math.random();

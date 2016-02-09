@@ -9,7 +9,7 @@ export class AuthProvider {
   }
   
   signIn(authData: AuthData): Promise<void> {
-    return this.transport.send("signIn", authData).then((data) => {
+    return this.transport.execute("signIn", authData).then((data) => {
       this.transport.authData = authData;
       window.localStorage.setItem("authData", JSON.stringify(this.transport.authData));
       window.localStorage.setItem("userData", JSON.stringify(data));
