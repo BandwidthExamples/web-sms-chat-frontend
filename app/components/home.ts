@@ -45,6 +45,9 @@ export class HomeView implements OnDestroy {
     store.getMessages().then((messages) => {
       this.messages = messages;
       this.areMessagesLoading = false;
+      if(this.messages.length > 0){
+        (<any>this.messages[this.messages.length - 1]).isNew = true; //make last message visible
+      }
     }, this.showError.bind(this));
     this.userData = store.getUserData();
     let contacts = this.contacts = store.getContacts();
@@ -78,7 +81,7 @@ export class HomeView implements OnDestroy {
          }
          else{
            (<any>message).isNew = true; // to make it visible
-           this.messages.unshift(message);
+           this.messages.push(message);
          }
        }
     });
@@ -116,7 +119,7 @@ export class HomeView implements OnDestroy {
     this.newMessage.to = this.selectedContacts[0].phoneNumber  
     this.store.addMessage(this.newMessage).then(message=>{
       (<any>message).isNew = true; // to make it visible
-      this.messages.unshift(message);
+      this.messages.push(message);
       this.newMessage = <Message>{};
     }, this.showError.bind(this));
   }
