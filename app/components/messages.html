@@ -1,5 +1,5 @@
 <ol class="messages">
-	<li *ngFor="#item of items" [ngClass]="{self: item.direction == 'out', other: item.direction == 'in'}">
+	<li *ngFor="#item of items" [ngClass]="{self: item.direction == 'out', other: item.direction == 'in'}" [makeVisible]="checkCanMakeVisible(item)">
 		<message [item]="item"></message>
 	</li>
 </ol>

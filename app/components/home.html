@@ -7,7 +7,7 @@
 				<span [hidden]="selectedContacts.length != 1"> with {{selectedContacts[0]?.name}}</span> 
 			</h1>
 		</div>
-		<messages [items]="messagesToShow" [getContactName]="getContactName" [selectContact]="selectContact" [hidden]="areMessagesLoading"></messages>
+		<messages [items]="messagesToShow" [getContactName]="getContactName" [selectContact]="selectContact" [hidden]="areMessagesLoading" [canMakeVisible]="canShowMessage"></messages>
 		<div class="message-loading" *ngIf="areMessagesLoading">
 			<img src="styles/load.gif" alt="Wait ...">
 		</div>
@@ -48,7 +48,7 @@
 			</form>
 		</div>
 		<ul class="contacts">
-			<li *ngFor="#contact of contacts; #i=index" [ngClass]="{active: contact.selected}" (click)="contact.selected = !contact.selected; contact.removeContactVisible=false;">
+			<li *ngFor="#contact of contacts; #i=index" [ngClass]="{active: contact.selected}" (click)="contact.selected = !contact.selected; contact.removeContactVisible=false;" [makeVisible]="contact.selected">
 				<div class="contact-info">
 					<div class="contact-name">{{contact.name}}</div>
 					<div class="contact-phone-number">{{contact.phoneNumber}}</div>

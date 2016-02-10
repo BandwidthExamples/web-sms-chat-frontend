@@ -4,7 +4,7 @@ import {FORM_DIRECTIVES} from 'angular2/common';
 import {AuthProvider} from "../services/auth";
 import {Store, Contact, Message, UserData} from "../services/store";
 import {Transport} from "../services/transport";
-import {MessagesView} from "./messages";
+import {MessagesView, MakeVisibleDirective} from "./messages";
 
 
 @Directive({
@@ -24,7 +24,7 @@ export class SetFocusDirective{
 
 @Component({
   selector: "home",
-  directives: [FORM_DIRECTIVES, MessagesView, SetFocusDirective],
+  directives: [FORM_DIRECTIVES, MessagesView, SetFocusDirective, MakeVisibleDirective],
   templateUrl: "app/components/home.html"
 })
 @CanActivate((next, previous) => {
@@ -77,6 +77,7 @@ export class HomeView implements OnDestroy {
            existingMessage.state = message.state; //update state of exiting message
          }
          else{
+           (<any>message).isNew = true; // to make it visible
            this.messages.unshift(message);
          }
        }
@@ -114,6 +115,7 @@ export class HomeView implements OnDestroy {
   sendMessage(){
     this.newMessage.to = this.selectedContacts[0].phoneNumber  
     this.store.addMessage(this.newMessage).then(message=>{
+      (<any>message).isNew = true; // to make it visible
       this.messages.unshift(message);
       this.newMessage = <Message>{};
     }, this.showError.bind(this));
@@ -122,5 +124,9 @@ export class HomeView implements OnDestroy {
   private showError(err: any): void{
     this.errorString = err.message || err;
     setTimeout(()=>this.errorString = null, 5000); //hide in 5 seconds
+  }
+  
+  canShowMessage(message: any): boolean{
+    return message.isNew; //scroll to new created/received messages
   }
 }

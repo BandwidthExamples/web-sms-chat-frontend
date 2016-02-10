@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation, Pipe, PipeTransform, Host, Input, Inject, forwardRef} from "angular2/core";
+import {Component, ViewEncapsulation, Pipe, PipeTransform, Host, Input, Inject, forwardRef, Directive, ElementRef} from "angular2/core";
 import {isFunction} from "angular2/src/facade/lang";
 
 
@@ -8,6 +8,20 @@ import {isFunction} from "angular2/src/facade/lang";
 class FormatTimePipe implements PipeTransform {
   transform(value: any, args: any[]) {
     return new Date(value).toLocaleString();
+  }
+}
+
+@Directive({
+  selector: "[makeVisible]"
+})
+export class MakeVisibleDirective{
+  constructor(private element: ElementRef){
+  }
+  
+  @Input() set makeVisible(val: boolean){
+    if(val){
+      setTimeout(() => this.element.nativeElement.scrollIntoView(), 200);
+    }
   }
 }
 
@@ -48,12 +62,20 @@ export class MessageView {
   selector: "messages",
   inputs: ["items"],
   templateUrl: "app/components/messages.html",
-  directives: [MessageView],
+  directives: [MessageView, MakeVisibleDirective], 
   styleUrls: ["styles/messages.css"],
   encapsulation: ViewEncapsulation.None
 })
 export class MessagesView {
   @Input() getContactName: (phoneNumber: string) => string
   @Input() selectContact: (phoneNumber: string) => void
+  @Input() canMakeVisible: (item: any) => boolean
+  
+  checkCanMakeVisible(item: any): boolean{
+    if (isFunction(this.canMakeVisible)) {
+      return this.canMakeVisible(item);
+    }
+    return false;
+  }
 }
 
