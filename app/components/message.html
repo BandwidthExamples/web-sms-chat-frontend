@@ -4,6 +4,7 @@
 	<p>{{item.text}}</p>
 	<time>
 		<span *ngIf="item.direction == 'in'">{{getContactName(item.from)}} • </span>
-		<span>{{item.time | fromNow}}</span>
+		<span>{{item.time | formatTime}}</span>
+		<span *ngIf="item.direction == 'out'"> • to {{getContactName(item.to)}}</span>
 	</time>
 </div>

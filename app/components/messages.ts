@@ -1,17 +1,13 @@
 import {Component,  ViewEncapsulation, Pipe, PipeTransform, Host, Input, Inject, forwardRef} from "angular2/core";
 import {isFunction} from "angular2/src/facade/lang";
-import * as moment_ from "moment";
-
-// under systemjs, moment is actually exported as the default export, so we account for that
-const moment = (<any>moment_)["default"] || moment_;
 
 
 @Pipe({
-  name: "fromNow"
+  name: "formatTime"
 })
-class FromNowPipe implements PipeTransform {
+class FormatTimePipe implements PipeTransform {
   transform(value: any, args: any[]) {
-    return moment(value).fromNow();
+    return new Date(value).toLocaleString();
   }
 }
 
@@ -20,7 +16,7 @@ class FromNowPipe implements PipeTransform {
 @Component({
   selector: "message",
   inputs: ["item"],
-  pipes: [FromNowPipe],
+  pipes: [FormatTimePipe],
   templateUrl: "app/components/message.html"
 })
 export class MessageView {
