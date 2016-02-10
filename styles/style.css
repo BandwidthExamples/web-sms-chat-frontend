@@ -240,6 +240,13 @@ body {
   padding: 0.5rem;
 }
 
+.conversation-container .chat .message-editor-error{
+  color: white;
+  background: #E8562E;
+  padding: 0.5rem;
+  font-size: 80%;
+}
+
 
 .conversation-container .chat .message-editor button{
   border-bottom-left-radius: 0px;

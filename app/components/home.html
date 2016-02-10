@@ -11,15 +11,18 @@
 		<div class="message-loading" *ngIf="areMessagesLoading">
 			<img src="styles/load.gif" alt="Wait ...">
 		</div>
-		<form #form="ngForm" (ngSubmit)="sendMessage();" class="message-editor" *ngIf="selectedContacts.length == 1">
+		<form #form="ngForm" (ngSubmit)="sendMessage();" class="message-editor" *ngIf="selectedContacts.length == 1 && !errorString">
 			<input [(ngModel)]="newMessage.text" ngControl="text" type="text" class="form-control" placeholder="Message" required autofocus>
 			<button type="submit" class="btn btn-primary">
 				<span class="glyphicon glyphicon-envelope"></span>
 			</button>
 		</form>
-		<div *ngIf="selectedContacts.length != 1" class="message-editor message-editor-warning">
+		<div *ngIf="selectedContacts.length != 1 && !errorString" class="message-editor message-editor-warning">
 			<p *ngIf="contacts.length > 0">Select <span [hidden]="selectedContacts.length < 2">only 1</span><span [hidden]="selectedContacts.length >= 2">a</span> contact to have ability to send a message</p>
 			<p *ngIf="contacts.length == 0">Please add a least 1 contact</p>
+		</div>
+		<div *ngIf="errorString" class="message-editor message-editor-error">
+			<p>{{errorString}}</p>
 		</div>
 	</div>
 	<div class="contacts-container">

@@ -24,13 +24,14 @@ export class HomeView implements OnDestroy {
   userData: UserData;
   subscription: any;
   areMessagesLoading: boolean = false;
+  errorString: string;
   
   constructor(private store: Store, transport: Transport) {
     this.areMessagesLoading = true;
     store.getMessages().then((messages) => {
       this.messages = messages;
       this.areMessagesLoading = false;
-    });
+    }, this.showError.bind(this));
     this.userData = store.getUserData();
     let contacts = this.contacts = store.getContacts();
     this.getContactName = (phoneNumber) => {
@@ -101,7 +102,11 @@ export class HomeView implements OnDestroy {
     this.store.addMessage(this.newMessage).then(message=>{
       this.messages.unshift(message);
       this.newMessage = <Message>{};
-    });
-    //TODO handle success/error
+    }, this.showError.bind(this));
+  }
+  
+  private showError(err: any): void{
+    this.errorString = err.message || err;
+    setTimeout(()=>this.errorString = null, 5000); //hide in 5 seconds
   }
 }
