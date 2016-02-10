@@ -23,9 +23,14 @@ export class HomeView implements OnDestroy {
   newMessage: Message = <Message>{};
   userData: UserData;
   subscription: any;
+  areMessagesLoading: boolean = false;
   
   constructor(private store: Store, transport: Transport) {
-    store.getMessages().then((messages) => this.messages = messages );
+    this.areMessagesLoading = true;
+    store.getMessages().then((messages) => {
+      this.messages = messages;
+      this.areMessagesLoading = false;
+    });
     this.userData = store.getUserData();
     let contacts = this.contacts = store.getContacts();
     this.getContactName = (phoneNumber) => {

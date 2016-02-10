@@ -14,7 +14,10 @@
 			<input ngControl="apiSecret" type="text" class="form-control" required>
 		</div>
 		<div class="form-group">
-			<button type="submit" class="btn btn-primary">Sign in</button>
+			<button type="submit" class="btn btn-primary" [disabled]="isProcessing">
+				<span [hidden]="isProcessing">Sign in</span>
+				<span [hidden]="!isProcessing">Wait ...</span>
+			</button>
 		</div>
 	</form>
 </div>

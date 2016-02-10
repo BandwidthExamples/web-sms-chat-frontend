@@ -7,7 +7,10 @@
 				<span [hidden]="selectedContacts.length != 1"> with {{selectedContacts[0]?.name}}</span> 
 			</h1>
 		</div>
-		<messages [items]="messagesToShow" [getContactName]="getContactName" [selectContact]="selectContact">Loading ...</messages>
+		<messages [items]="messagesToShow" [getContactName]="getContactName" [selectContact]="selectContact" [hidden]="areMessagesLoading"></messages>
+		<div class="message-loading" *ngIf="areMessagesLoading">
+			<img src="styles/load.gif" alt="Wait ...">
+		</div>
 		<form #form="ngForm" (ngSubmit)="sendMessage();" class="message-editor" *ngIf="selectedContacts.length == 1">
 			<input [(ngModel)]="newMessage.text" ngControl="text" type="text" class="form-control" placeholder="Message" required autofocus>
 			<button type="submit" class="btn btn-primary">

@@ -13,11 +13,14 @@ export class SignInView {
   }
      
   errorString: string;
+  isProcessing: boolean = false;
   signIn(data){
+    this.isProcessing = true;
     return this.authProvider.signIn(data)
     .then(()=>{
       this.router.navigate(["Home"]);
     }, (err)=>{
+      this.isProcessing = false;
       this.errorString = err.message || err;
     });
   }
