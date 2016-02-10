@@ -25,23 +25,23 @@
 	<div class="contacts-container">
 		<div class="chat-title">
 			<h1>Contacts</h1>
-			<button class="btn btn-primary btn-xs pull-right" (click)="newContact = {}; addContactEditorVisible=true" [hidden]="addContactEditorVisible">
+			<button class="btn btn-primary btn-xs pull-right" (click)="editedContact = {}; contactEditorVisible=true" [hidden]="contactEditorVisible">
 				<span class="glyphicon glyphicon-plus"></span>
 			</button>
 		</div>
-		<div class="well well-sm contact-editor" [hidden]="!addContactEditorVisible">
-			<button type="button" class="close" (click)="addContactEditorVisible=false;">
+		<div class="well well-sm contact-editor" [hidden]="!contactEditorVisible">
+			<button type="button" class="close" (click)="contactEditorVisible=false;">
 				<span aria-hidden="true">&times;</span>
 			</button>
-			<form #form="ngForm" (ngSubmit)="addContact(); addContactEditorVisible=false;" class="form">
+			<form #form="ngForm" (ngSubmit)="saveContact(); contactEditorVisible=false;" class="form">
 				<div class="form-group">
-					<input [(ngModel)]="newContact.name" ngControl="name" type="text" class="form-control" placeholder="Name" required autofocus>
+					<input [(ngModel)]="editedContact.name" ngControl="name" type="text" class="form-control" placeholder="Name" required autofocus>
 				</div>
 				<div class="form-group">
-					<input [(ngModel)]="newContact.phoneNumber" ngControl="phoneNumber" type="tel" class="form-control" placeholder="Phone Number"
+					<input [(ngModel)]="editedContact.phoneNumber" ngControl="phoneNumber" type="tel" class="form-control" placeholder="Phone Number"
 					required>
 				</div>
-				<button type="submit" class="btn btn-primary btn-block">Add contact</button>
+				<button type="submit" class="btn btn-primary btn-block">Save</button>
 			</form>
 		</div>
 		<ul class="contacts">
@@ -50,10 +50,14 @@
 					<div class="contact-name">{{contact.name}}</div>
 					<div class="contact-phone-number">{{contact.phoneNumber}}</div>
 				</div>
-				<button type="button" class="btn btn-default btn-xs pull-right" (click)="contact.removeContactVisible=true; $event.stopPropagation();"
-				[hidden]="contact.removeContactVisible">
-					<span class="glyphicon glyphicon-trash"></span>
-				</button>
+				<div class="btn-group pull-right" [hidden]="contact.removeContactVisible" (click)="$event.stopPropagation();">
+					<button type="button" class="btn btn-default btn-xs" title="Edit" (click)="editedContact = {id: contact.id, name: contact.name, phoneNumber: contact.phoneNumber}; contactEditorVisible=true" [hidden]="contactEditorVisible">
+						<span class="glyphicon glyphicon-edit"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-xs" title="Remove" (click)="contact.removeContactVisible=true">
+						<span class="glyphicon glyphicon-trash"></span>
+					</button>
+				</div>	
 				<div class="btn-group pull-right" [hidden]="!contact.removeContactVisible" (click)="$event.stopPropagation();">
 					<button type="button" class="btn btn-danger btn-xs" title="Remove" (click)="removeContact(contact, i)"><span class="glyphicon glyphicon-remove"></span></button>
 					<button type="button" class="btn btn-default btn-xs" title="Leave" (click)="contact.removeContactVisible=false"><span class="glyphicon glyphicon-ok"></span></button>

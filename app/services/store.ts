@@ -4,6 +4,8 @@ import {Injectable} from "angular2/core";
 @Injectable()
 export class Store {
   
+  private contactIdGenerator: number;
+  
   constructor(private transport: Transport){
   }
   
@@ -23,9 +25,22 @@ export class Store {
     return this.loadContacts();
   }
   
-  addContact(contact): Contact{
+  saveContact(contact): Contact{
     let contacts = this.loadContacts();
-    contacts.push(contact);
+    if(contact.id){
+      // existing contact
+      let existingContact = contacts.filter(c=>c.id == contact.id)[0];
+      if(existingContact){
+        existingContact.phoneNumber = contact.phoneNumber;
+        existingContact.name = contact.name;
+        contact = existingContact;
+      }  
+    }
+    else{
+      // new contact
+      contact.id = Math.random().toString(36).substring(5);
+      contacts.push(contact);
+    }
     this.saveContacts(contacts);
     return contact;
   }
@@ -50,7 +65,7 @@ export class Store {
   }
   
   private saveContacts(contacts: Contact[]): void{
-    window.localStorage.setItem("contacts", JSON.stringify(contacts.map((c) => <Contact>{name: c.name, phoneNumber: c.phoneNumber})));
+    window.localStorage.setItem("contacts", JSON.stringify(contacts.map((c) => <Contact>{id: c.id, name: c.name, phoneNumber: c.phoneNumber})));
   }
   
   getUserData(): UserData{
@@ -69,6 +84,7 @@ export interface Message {
 }
 
 export interface Contact {
+  id: string;
   name: string;
   phoneNumber: string;
 }

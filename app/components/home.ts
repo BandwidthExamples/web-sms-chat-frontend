@@ -19,7 +19,7 @@ import {MessagesView} from "./messages";
 export class HomeView implements OnDestroy {
   contacts: Contact[];
   messages: Message[] = new Array<Message>();
-  newContact: Contact = <Contact>{};
+  editedContact: Contact = <Contact>{};
   newMessage: Message = <Message>{};
   userData: UserData;
   subscription: any;
@@ -48,7 +48,7 @@ export class HomeView implements OnDestroy {
           name: phoneNumber,
           phoneNumber: phoneNumber
         };
-        store.addContact(contact);
+        store.saveContact(contact);
       }
       (<any>contact).selected = true;
     };
@@ -72,8 +72,8 @@ export class HomeView implements OnDestroy {
     this.subscription.unsubscribe();
   }
   
-  addContact(){
-    this.store.addContact(this.newContact);
+  saveContact(){
+    this.store.saveContact(this.editedContact);
   }
   
   removeContact(data, index){
