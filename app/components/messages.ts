@@ -1,4 +1,4 @@
-import {Component,  ViewEncapsulation, Pipe, PipeTransform, Host, Input, Inject, forwardRef} from "angular2/core";
+import {Component, ViewEncapsulation, Pipe, PipeTransform, Host, Input, Inject, forwardRef} from "angular2/core";
 import {isFunction} from "angular2/src/facade/lang";
 
 
@@ -20,22 +20,29 @@ class FormatTimePipe implements PipeTransform {
   templateUrl: "app/components/message.html"
 })
 export class MessageView {
-  
-  private messages:MessagesView;
-  constructor(@Host() @Inject(forwardRef(() => MessagesView)) messages:MessagesView) {
+
+  private messages: MessagesView;
+  constructor( @Host() @Inject(forwardRef(() => MessagesView)) messages: MessagesView) {
     this.messages = messages;
   }
-  
-  getContactName(phoneNumber: string): string{
-    if(isFunction(this.messages.getContactName)){
-      let name =  this.messages.getContactName(phoneNumber);
-      if(name){
+
+  getContactName(phoneNumber: string): string {
+    if (isFunction(this.messages.getContactName)) {
+      let name = this.messages.getContactName(phoneNumber);
+      if (name) {
         return name;
-      }      
+      }
     }
     return phoneNumber;
   }
- }
+
+  selectContact(phoneNumber: string): boolean {
+    if (isFunction(this.messages.selectContact)) {
+      this.messages.selectContact(phoneNumber);
+    }
+    return false;
+  }
+}
 
 @Component({
   selector: "messages",
@@ -47,5 +54,6 @@ export class MessageView {
 })
 export class MessagesView {
   @Input() getContactName: (phoneNumber: string) => string
+  @Input() selectContact: (phoneNumber: string) => void
 }
 

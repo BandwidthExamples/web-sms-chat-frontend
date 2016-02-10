@@ -3,8 +3,8 @@
 <div class="message">
 	<p>{{item.text}}</p>
 	<time>
-		<span *ngIf="item.direction == 'in'">{{getContactName(item.from)}} • </span>
+		<span *ngIf="item.direction == 'in'"><button class="btn btn-link btn-xs contact-link" (click)="selectContact(item.from)">{{getContactName(item.from)}}</button> • </span>
 		<span>{{item.time | formatTime}}</span>
-		<span *ngIf="item.direction == 'out'"> • to {{getContactName(item.to)}}</span>
+		<span *ngIf="item.direction == 'out'"> • to <button class="btn btn-link btn-xs contact-link" (click)="selectContact(item.to)">{{getContactName(item.to)}}</button></span>
 	</time>
 </div>

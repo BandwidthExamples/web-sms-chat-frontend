@@ -28,10 +28,25 @@ export class HomeView implements OnDestroy {
     store.getMessages().then((messages) => this.messages = messages );
     this.userData = store.getUserData();
     let contacts = this.contacts = store.getContacts();
-    this.getContactName = ((phoneNumber) => {
+    this.getContactName = (phoneNumber) => {
       let contact = <Contact>(contacts.filter((c)=>c.phoneNumber == phoneNumber)[0] || {});
       return contact.name;
-    });
+    };
+    
+    this.selectContact = (phoneNumber) =>{
+      for(let c of contacts){
+        (<any>c).selected = false;  
+      }
+      let contact = <Contact>contacts.filter((c)=>c.phoneNumber == phoneNumber)[0];
+      if(!contact){
+        contact = <Contact>{
+          name: phoneNumber,
+          phoneNumber: phoneNumber
+        };
+        store.addContact(contact);
+      }
+      (<any>contact).selected = true;
+    };
     
     //handle incoming messages (and state of sent messages)
     this.subscription = transport.dataReceived.subscribe(ev => {
@@ -74,6 +89,7 @@ export class HomeView implements OnDestroy {
     });
   }
   getContactName: (phoneNumber: string) => string;
+  selectContact: (phoneNumber: string) => void;
   
   sendMessage(){
     this.newMessage.to = this.selectedContacts[0].phoneNumber  

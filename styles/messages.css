@@ -69,3 +69,11 @@
 message{
   display: flex;
 }
+
+.contact-link{
+  font-size: 0.7rem;
+  font-weight: bold; 
+  padding: 0px 1px;
+  border: none;
+  margin-bottom: 2px;
+}

@@ -7,7 +7,7 @@
 				<span [hidden]="selectedContacts.length != 1"> with {{selectedContacts[0]?.name}}</span> 
 			</h1>
 		</div>
-		<messages [items]="messagesToShow" [getContactName]="getContactName">Loading ...</messages>
+		<messages [items]="messagesToShow" [getContactName]="getContactName" [selectContact]="selectContact">Loading ...</messages>
 		<form #form="ngForm" (ngSubmit)="sendMessage();" class="message-editor" *ngIf="selectedContacts.length == 1">
 			<input [(ngModel)]="newMessage.text" ngControl="text" type="text" class="form-control" placeholder="Message" required autofocus>
 			<button type="submit" class="btn btn-primary">
@@ -15,7 +15,8 @@
 			</button>
 		</form>
 		<div *ngIf="selectedContacts.length != 1" class="message-editor message-editor-warning">
-			<p>Select <span [hidden]="selectedContacts.length < 2">only 1</span><span [hidden]="selectedContacts.length >= 2">a</span> contact to have ability to send a message</p>
+			<p *ngIf="contacts.length > 0">Select <span [hidden]="selectedContacts.length < 2">only 1</span><span [hidden]="selectedContacts.length >= 2">a</span> contact to have ability to send a message</p>
+			<p *ngIf="contacts.length == 0">Please add a least 1 contact</p>
 		</div>
 	</div>
 	<div class="contacts-container">
@@ -51,8 +52,8 @@
 					<span class="glyphicon glyphicon-trash"></span>
 				</button>
 				<div class="btn-group pull-right" [hidden]="!contact.removeContactVisible" (click)="$event.stopPropagation();">
-					<button type="button" class="btn btn-danger btn-xs" (click)="removeContact(contact, i)">Remove</button>
-					<button type="button" class="btn btn-default btn-xs" (click)="contact.removeContactVisible=false">Leave</button>
+					<button type="button" class="btn btn-danger btn-xs" title="Remove" (click)="removeContact(contact, i)"><span class="glyphicon glyphicon-remove"></span></button>
+					<button type="button" class="btn btn-default btn-xs" title="Leave" (click)="contact.removeContactVisible=false"><span class="glyphicon glyphicon-ok"></span></button>
 				</div>
 			</li>
 		</ul>
