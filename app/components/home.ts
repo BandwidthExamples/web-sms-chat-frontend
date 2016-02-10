@@ -82,6 +82,9 @@ export class HomeView implements OnDestroy {
     this.subscription = transport.dataReceived.subscribe(ev => {
        if(ev.eventName == "message"){
          let message = <Message>ev.data;
+         if(!((message.direction == "in" && message.to == this.userData.phoneNumber) || (message.direction == "out" && message.from == this.userData.phoneNumber))){
+           return;
+         }
          let existingMessage = this.messages.filter(m=>m.messageId == message.messageId)[0];
          if(existingMessage){
            existingMessage.state = message.state; //update state of exiting message
