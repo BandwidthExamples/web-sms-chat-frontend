@@ -7,7 +7,7 @@
 				<span [hidden]="selectedContacts.length != 1"> with {{selectedContacts[0]?.name}}</span> 
 			</h1>
 		</div>
-		<messages [items]="messagesToShow" [getContactName]="getContactName" [selectContact]="selectContact" [hidden]="areMessagesLoading" [canMakeVisible]="canShowMessage"></messages>
+		<messages [items]="messagesToShow" [getContactName]="getContactName" [selectContact]="selectContact" [hidden]="areMessagesLoading" [canMakeVisible]="canShowMessage" [getAttachment]="showAttachment"></messages>
 		<div class="message-loading" *ngIf="areMessagesLoading">
 			<img src="styles/load.gif" alt="Wait ...">
 		</div>

@@ -56,6 +56,12 @@ export class MessageView {
     }
     return false;
   }
+  
+  getAttachment(url: string): void{
+    if (isFunction(this.messages.getAttachment)) {
+      this.messages.getAttachment(url);
+    }
+  }
 }
 
 @Component({
@@ -70,6 +76,7 @@ export class MessagesView {
   @Input() getContactName: (phoneNumber: string) => string
   @Input() selectContact: (phoneNumber: string) => void
   @Input() canMakeVisible: (item: any) => boolean
+  @Input() getAttachment: (url: string) => void
   
   checkCanMakeVisible(item: any): boolean{
     if (isFunction(this.canMakeVisible)) {

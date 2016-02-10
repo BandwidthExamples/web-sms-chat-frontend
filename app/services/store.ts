@@ -81,6 +81,7 @@ export interface Message {
   time: Date;
   direction: string;
   state: string;
+  media: string[];
 }
 
 export interface Contact {

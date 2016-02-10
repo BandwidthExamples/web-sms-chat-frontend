@@ -40,7 +40,7 @@ export class HomeView implements OnDestroy {
   areMessagesLoading: boolean = false;
   errorString: string;
   
-  constructor(private store: Store, transport: Transport) {
+  constructor(private store: Store, private transport: Transport) {
     this.areMessagesLoading = true;
     store.getMessages().then((messages) => {
       this.messages = messages;
@@ -69,6 +69,13 @@ export class HomeView implements OnDestroy {
         store.saveContact(contact);
       }
       (<any>contact).selected = true;
+    };
+    
+    this.showAttachment = (url) => {
+      //add auth data
+      url = url.replace("https://", `https://${this.transport.authData.apiToken}:${this.transport.authData.apiSecret}@`);
+      url = url.replace("http://", `http://${this.transport.authData.apiToken}:${this.transport.authData.apiSecret}@`);
+      window.open(url);
     };
     
     //handle incoming messages (and state of sent messages)
@@ -114,6 +121,7 @@ export class HomeView implements OnDestroy {
   }
   getContactName: (phoneNumber: string) => string;
   selectContact: (phoneNumber: string) => void;
+  showAttachment: (url: string) => void;
   
   sendMessage(){
     this.newMessage.to = this.selectedContacts[0].phoneNumber  

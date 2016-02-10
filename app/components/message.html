@@ -7,4 +7,11 @@
 		<span>{{item.time | formatTime}}</span>
 		<span *ngIf="item.direction == 'out'"> • to <button class="btn btn-link btn-xs contact-link" (click)="selectContact(item.to)">{{getContactName(item.to)}}</button></span>
 	</time>
+	<ul *ngIf="item.media?.length > 0" class="attachments">
+		<li *ngFor="#url of item.media">
+			<button class="btn btn-xs btn-default" (click)="getAttachment(url)">
+				<span class="glyphicon glyphicon-paperclip"></span>
+			</button>
+		</li>
+	</ul>
 </div>

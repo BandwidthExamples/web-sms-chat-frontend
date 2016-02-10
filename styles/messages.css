@@ -66,6 +66,17 @@
   color: #676767;
 }
 
+.message .attachments{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.message .attachments li{
+  display: inline;
+  padding: 1px;
+}
+
 message{
   display: flex;
 }
@@ -77,3 +88,4 @@ message{
   border: none;
   margin-bottom: 2px;
 }
+
