@@ -1,4 +1,4 @@
-import {Component, Injector, Pipe, PipeTransform, OnDestroy } from "angular2/core";
+import {Component, Injector, Pipe, PipeTransform, OnDestroy, Directive, ElementRef, Input } from "angular2/core";
 import {CanActivate} from "angular2/router";
 import {FORM_DIRECTIVES} from 'angular2/common';
 import {AuthProvider} from "../services/auth";
@@ -7,10 +7,24 @@ import {Transport} from "../services/transport";
 import {MessagesView} from "./messages";
 
 
+@Directive({
+  selector: "[setFocus]"
+})
+export class SetFocusDirective{
+  constructor(private element: ElementRef){
+  }
+  
+  @Input() set setFocus(val: boolean){
+    if(val){
+      setTimeout(() => this.element.nativeElement.focus(), 200);
+    }
+  }
+}
+
 
 @Component({
   selector: "home",
-  directives: [FORM_DIRECTIVES, MessagesView],
+  directives: [FORM_DIRECTIVES, MessagesView, SetFocusDirective],
   templateUrl: "app/components/home.html"
 })
 @CanActivate((next, previous) => {
