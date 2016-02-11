@@ -2,8 +2,8 @@
   "name": "web-sms-frontend",
   "version": "0.0.1",
   "scripts": {
-    "build": "./node_modules/.bin/typings install && ./node_modules/.bin/tsc",
-    "tsc:w": "./node_modules/.bin/typings install && ./node_modules/.bin/tsc -w",
+    "build": "./node_modules/.bin/tsc",
+    "tsc:w": "./node_modules/.bin/tsc -w",
     "lite": "./node_modules/.bin/lite-server",
     "start": "./node_modules/.bin/concurrent  -k \"npm run tsc:w\" \"npm run lite\" "
   },
@@ -21,7 +21,6 @@
   "devDependencies": {
     "concurrently": "^1.0.0",
     "lite-server": "^1.3.4",
-    "typescript": "^1.7.5",
-    "typings": "^0.6.8"
+    "typescript": "^1.7.5"
   }
 }
