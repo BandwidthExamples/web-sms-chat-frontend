@@ -10,7 +10,7 @@ export class Transport {
 
   private initSocket(): Promise<void> {
     if (this.socket) {
-      return Promise.resolve();
+      return new Promise<void>((resolve, reject) => resolve());
     }
     return new Promise<void>((resolve, reject) => {
       this.socket = new WebSocket(this.buildWebSocketUrl());
