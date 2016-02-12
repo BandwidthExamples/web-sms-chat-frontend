@@ -9,9 +9,8 @@
     "removeComments": false,
     "noImplicitAny": false
   },
-  "exclude": [
-    "node_modules",
-    "typings/main.d.ts",
-    "typings/main"
+  "files":[
+    "./node_modules/angular2/typings/browser.d.ts",
+    "./app/bootstrap.ts"
   ]
 }
