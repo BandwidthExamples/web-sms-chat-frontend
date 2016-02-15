@@ -4,7 +4,7 @@
 			<h1>
 				<span>{{userData.phoneNumber}}: Conversation</span>
 				<span [hidden]="selectedContacts.length < 2"> with {{selectedContacts.length}} contacts</span>
-				<span [hidden]="selectedContacts.length != 1"> with {{selectedContacts[0]?.name}}</span> 
+				<span [hidden]="selectedContacts.length != 1"> with {{selectedContacts[0]?.name}}</span>
 			</h1>
 		</div>
 		<messages [items]="messagesToShow" [getContactName]="getContactName" [selectContact]="selectContact" [hidden]="areMessagesLoading" [canMakeVisible]="canShowMessage" [getAttachment]="showAttachment"></messages>
@@ -13,7 +13,17 @@
 		</div>
 		<form #form="ngForm" (ngSubmit)="sendMessage();" class="message-editor" *ngIf="selectedContacts.length == 1 && !errorString">
 			<input [(ngModel)]="newMessage.text" ngControl="text" type="text" class="form-control" placeholder="Message" required [setFocus]="selectedContacts.length == 1 && !errorString">
-			<button type="submit" class="btn btn-primary">
+			<ul class="attachments-editor" *ngIf="uploader.queue.length > 0">
+				<li *ngFor="#item of uploader.queue" [ngClass]="{uploading: item.isUploading}">
+					<span [ngClass]="{'text-danger': item.isError}">{{item.file.name}}</span>
+					<button class="close" (click)="uploader.removeFromQueue(item)"><span aria-hidden="true">&times;</span></button>
+				</li>
+			</ul>
+			<input #selectFiles type="file" ng2-file-select [uploader]="uploader" multiple class="hidden"/>
+			<button type="button" class="btn btn-default" (click)="selectFiles.click()">
+				<span class="glyphicon glyphicon-paperclip"></span>
+			</button>
+			<button type="submit" class="btn btn-primary" [disabled]="uploader.isUploading">
 				<span class="glyphicon glyphicon-envelope"></span>
 			</button>
 		</form>
@@ -60,7 +70,7 @@
 					<button type="button" class="btn btn-default btn-xs" title="Remove" (click)="contact.removeContactVisible=true">
 						<span class="glyphicon glyphicon-trash"></span>
 					</button>
-				</div>	
+				</div>
 				<div class="btn-group pull-right" [hidden]="!contact.removeContactVisible" (click)="$event.stopPropagation();">
 					<button type="button" class="btn btn-danger btn-xs" title="Remove" (click)="removeContact(contact, i)"><span class="glyphicon glyphicon-remove"></span></button>
 					<button type="button" class="btn btn-default btn-xs" title="Leave" (click)="contact.removeContactVisible=false"><span class="glyphicon glyphicon-ok"></span></button>
