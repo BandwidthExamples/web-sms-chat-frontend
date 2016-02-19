@@ -1,7 +1,6 @@
 "use strict";
 const gulp = require("gulp");
 const concat = require("gulp-concat");
-const gzip = require("gulp-gzip");
 
 const vendorScripts = [
 	"node_modules/systemjs/dist/system-polyfills.js",
@@ -15,7 +14,6 @@ const vendorScripts = [
 gulp.task("vendor.js", function () {
   return gulp.src(vendorScripts)
     .pipe(concat("vendor.js"))
-    .pipe(gzip())
     .pipe(gulp.dest("."));
 });
 
