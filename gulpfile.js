@@ -1,21 +1,25 @@
 "use strict";
 const gulp = require("gulp");
-const typescript = require("gulp-typescript");
-const tslint = require("gulp-tslint");
-const tscConfig = require("./tsconfig.json");
+const concat = require("gulp-concat");
+const gzip = require("gulp-gzip");
 
+const vendorScripts = [
+	"node_modules/systemjs/dist/system-polyfills.js",
+	"node_modules/angular2/bundles/angular2-polyfills.min.js",
+	"node_modules/systemjs/dist/system.src.js",
+	"node_modules/rxjs/bundles/Rx.min.js",
+	"node_modules/angular2/bundles/angular2.dev.js",
+	"node_modules/angular2/bundles/router.min.js"
+];
 
-
-gulp.task("compile", function () {
-  return gulp.src(tscConfig.files)
-    .pipe(tslint())
-    .pipe(typescript(tscConfig.compilerOptions))
-    .pipe(gulp.dest(function(file) {
-      return file.base;
-    }));
+gulp.task("vendor.js", function () {
+  return gulp.src(vendorScripts)
+    .pipe(concat("vendor.js"))
+    .pipe(gzip())
+    .pipe(gulp.dest("."));
 });
 
-gulp.task("default", ["compile"], function () {
+gulp.task("default", ["vendor.js"], function () {
 });
 
 
