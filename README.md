@@ -23,3 +23,7 @@ npm install
 npm run build
 
 ```
+
+## Demo
+
+![Screen Shot](/readme_images/screenshot.png?raw=true)
