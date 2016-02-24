@@ -21,7 +21,7 @@ System.config({
       "defaultExtension": "ts"
     }
   },
-
+  
   map: {
     "angular2": "npm:angular2@2.0.0-beta.7",
     "ng2-file-upload": "npm:ng2-file-upload@1.0.0-beta.1",
@@ -319,3 +319,7 @@ System.config({
     }
   }
 });
+
+System.set("bandwidth-webrtc", System.newModule({
+    "default": window.BWClient
+}));

@@ -2,8 +2,10 @@ import {Component, Injector, Pipe, PipeTransform, OnDestroy, Directive, ElementR
 import {CanActivate} from "angular2/router";
 import {FORM_DIRECTIVES} from 'angular2/common';
 import {AuthProvider} from "../services/auth";
+import {BWClient, BWPhone, BWCall} from "bandwidth-webrtc";
 import {Store, Contact, Message, UserData} from "../services/store";
 import {Transport} from "../services/transport";
+import {PhoneProvider} from "../services/phone";
 import {MessagesView, MakeVisibleDirective} from "./messages";
 import {FILE_UPLOAD_DIRECTIVES, FileUploader} from "ng2-file-upload";
 
@@ -41,8 +43,11 @@ export class HomeView implements OnDestroy {
   areMessagesLoading: boolean = false;
   errorString: string;
   uploader: FileUploader;
+  phone: BWPhone;
+  private _activeCall: BWCall;
 
-  constructor(private store: Store, private transport: Transport) {
+  constructor(private store: Store, private transport: Transport, phoneProvider: PhoneProvider) {
+    
     this.areMessagesLoading = true;
     this.uploader = new FileUploader({
       url: "/upload",
@@ -106,10 +111,17 @@ export class HomeView implements OnDestroy {
          }
        }
     });
+    
+    this.phone = phoneProvider.createPhone();
+    this.phone.on("incomingCall", call => {
+      this.activeCall = call;
+      this.activeCall.playRinging(); 
+    });
   }
 
   ngOnDestroy(){
     this.subscription.unsubscribe();
+    this.hangup();
   }
 
   saveContact(){
@@ -133,6 +145,26 @@ export class HomeView implements OnDestroy {
       return selectedNumbers.indexOf(m.from) >= 0 || selectedNumbers.indexOf(m.to) >= 0;
     });
   }
+  
+  get activeCall(): BWCall{
+    return this._activeCall;
+  }
+  
+  set activeCall(call: BWCall){
+    this.hangup();
+    this._activeCall = call;
+    if(call){
+      call.on("ended", () => this.activeCall = null);
+    }
+  }
+  
+  get remotePhoneNumber(): string{
+    if(this.activeCall){
+      return this.activeCall.getInfo().remoteId;
+    }
+    return "";
+  }
+  
   getContactName: (phoneNumber: string) => string;
   selectContact: (phoneNumber: string) => void;
   showAttachment: (url: string) => void;
@@ -140,13 +172,26 @@ export class HomeView implements OnDestroy {
   sendMessage(){
     this.newMessage.to = this.selectedContacts[0].phoneNumber
     this.newMessage.media = this.uploader.queue.map(i =>  `https://api.catapult.inetwork.com/v1/users/${this.transport.authData.userId}/media/${encodeURIComponent(i.response.fileName)}`);
-    this.store.addMessage(this.newMessage).then(message=>{
+    this.store.addMessage(this.newMessage).then(message => {
       (<any>message).isNew = true; // to make it visible
       this.messages.push(message);
       this.newMessage = <Message>{};
       this.uploader.clearQueue();
     }, this.showError.bind(this));
   }
+  
+  callTo(phoneNumber){
+    this.activeCall = this.phone.call(phoneNumber);
+  }
+  
+  hangup(){
+    if(this.activeCall){
+      this.activeCall.hangup();
+      this.activeCall = null;
+    }
+  }
+  
+  
 
   private showError(err: any): void{
     this.errorString = err.message || err;
