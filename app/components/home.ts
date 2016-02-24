@@ -5,7 +5,7 @@ import {AuthProvider} from "../services/auth";
 import {Store, Contact, Message, UserData} from "../services/store";
 import {Transport} from "../services/transport";
 import {MessagesView, MakeVisibleDirective} from "./messages";
-import {FILE_UPLOAD_DIRECTIVES, FileUploader} from "../../node_modules/ng2-file-upload";
+import {FILE_UPLOAD_DIRECTIVES, FileUploader} from "ng2-file-upload";
 
 
 @Directive({
