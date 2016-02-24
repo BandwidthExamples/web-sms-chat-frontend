@@ -84,8 +84,8 @@
 </div>
 <div class="call-container" [hidden]="!activeCall">
 	<div>{{remotePhoneNumber}}</div>
-	<div>{{activeCall.info.status}}</div>
-	<button type="button" class="btn btn-default btn-primary" title="Answer" (click)="activeCall?.accept()" [hidden]="activeCall.info.direction == 'in'">
+	<div>{{activeCall?.info?.status}}</div>
+	<button type="button" class="btn btn-default btn-primary" title="Answer" (click)="activeCall?.accept()" [hidden]="activeCall?.info?.direction == 'in'">
 		<span class="glyphicon glyphicon-earphone"></span>
 	</button>
 	<button type="button" class="btn btn-default btn-danger" title="Reject" (click)="activeCall?.reject()">

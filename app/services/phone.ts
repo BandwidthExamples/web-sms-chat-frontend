@@ -6,9 +6,9 @@ export class PhoneProvider {
   
   createPhone(): BWPhone {
     let userData = JSON.parse(window.localStorage.getItem("userData"));
-    let phone = BWClient.createPhone({
+    let phone = window.BWClient.createPhone({
         username: userData.userName,
-        domain: userData.domain,
+        domain: `${userData.domain}.bwapp.bwsip.io`,
         password: userData.password,
         logLevel: "log"//can be debug,log,warn,error (default=log)
     });

@@ -3,6 +3,7 @@ import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, APP_BASE_HREF, Router 
 import {Store} from "../services/store";
 import {AuthProvider} from "../services/auth";
 import {Transport} from "../services/transport";
+import {PhoneProvider} from "../services/phone";
 import {SignInView} from "../components/signIn";
 import {ContactsView} from "./contacts";
 import {HomeView} from "./home";
@@ -11,7 +12,7 @@ import {HomeView} from "./home";
   selector: "sms-app",
   template: "<router-outlet></router-outlet>",
   directives: [ROUTER_DIRECTIVES],
-  providers: [Store, AuthProvider, provide(Transport, {useValue: new Transport() /*singleton*/}), ROUTER_PROVIDERS, provide(APP_BASE_HREF, {useValue : "/"})]
+  providers: [Store, AuthProvider, PhoneProvider, provide(Transport, {useValue: new Transport() /*singleton*/}), ROUTER_PROVIDERS, provide(APP_BASE_HREF, {useValue : "/"})]
 })
 @RouteConfig([
   { path: "/", as: "Home", component: HomeView},
