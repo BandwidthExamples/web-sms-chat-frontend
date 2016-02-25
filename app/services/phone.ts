@@ -10,8 +10,8 @@ export class PhoneProvider {
     let phone = BWClient.createPhone({
         username: userData.userName,
         domain: userData.domain,
-        password: userData.password,
-        logLevel: "log"//can be debug,log,warn,error (default=log)
+        authToken: userData.authToken,
+        logLevel: "warn"//can be debug,log,warn,error (default=log)
     });
     return phone;
   }
