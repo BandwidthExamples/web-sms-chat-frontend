@@ -113,6 +113,7 @@ export class HomeView implements OnDestroy {
     });
     
     this.phone = phoneProvider.createPhone();
+    this.phone.register();
     this.phone.on("incomingCall", call => {
       this.activeCall = call;
       this.activeCall.playRinging(); 
@@ -158,12 +159,13 @@ export class HomeView implements OnDestroy {
     }
   }
   
-  get remotePhoneNumber(): string{
+  get activeCallInfo(){
     if(this.activeCall){
-      return this.activeCall.getInfo().remoteId;
+      return this.activeCall.getInfo();
     }
-    return "";
+    return {};
   }
+  
   
   getContactName: (phoneNumber: string) => string;
   selectContact: (phoneNumber: string) => void;

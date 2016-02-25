@@ -339,3 +339,35 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.call-container{
+  position: relative;
+  margin: -113px 2px 0px 2px;
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  padding: 10px;
+  order: 1px solid #676767;
+  background: white;
+  border-radius: 4px;
+  height: 111px;
+}
+
+.call-container button{
+  width: 80px;
+}
+
+.call-container .contact{
+  font-size: 120%;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.call-container .status{
+  font-size: 80%;
+  margin-bottom: 6px;
+}

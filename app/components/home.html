@@ -1,4 +1,4 @@
-<div class="conversation-container" [hidden]="activeCall">
+<div class="conversation-container">
 	<div class="chat">
 		<div class="chat-title">
 			<h1>
@@ -64,7 +64,7 @@
 					<div class="contact-phone-number">{{contact.phoneNumber}}</div>
 				</div>
 				<div class="btn-group pull-right" [hidden]="contact.removeContactVisible" (click)="$event.stopPropagation();">
-					<button type="button" class="btn btn-default btn-xs btn-success" title="Call" (click)="callTo(contact.phoneNumber)">
+					<button type="button" class="btn btn-default btn-xs btn-primary" title="Call" (click)="callTo(contact.phoneNumber)">
 						<span class="glyphicon glyphicon-earphone"></span>
 					</button>
 					<button type="button" class="btn btn-default btn-xs" title="Edit" (click)="editedContact = {id: contact.id, name: contact.name, phoneNumber: contact.phoneNumber}; contactEditorVisible=true" [hidden]="contactEditorVisible">
@@ -82,13 +82,22 @@
 		</ul>
 	</div>
 </div>
-<div class="call-container" [hidden]="!activeCall">
-	<div>{{remotePhoneNumber}}</div>
-	<div>{{activeCall?.info?.status}}</div>
-	<button type="button" class="btn btn-default btn-primary" title="Answer" (click)="activeCall?.accept()" [hidden]="activeCall?.info?.direction == 'in'">
-		<span class="glyphicon glyphicon-earphone"></span>
-	</button>
-	<button type="button" class="btn btn-default btn-danger" title="Reject" (click)="activeCall?.reject()">
-		<span class="glyphicon glyphicon-earphone"></span>
-	</button>
+<div class="call-container" *ngIf="activeCall">
+	<div class="contact">{{getContactName(activeCallInfo.remoteId)}}</div>
+	<div class="status">{{activeCallInfo.status}}</div>
+	<div>
+		<div *ngIf="activeCallInfo.direction == 'in'">
+			<button type="button" class="btn btn-default btn-primary" title="Answer" (click)="activeCall?.accept()">
+				<span class="glyphicon glyphicon-earphone"></span>
+			</button>
+			<button type="button" class="btn btn-default btn-danger" title="Reject" (click)="activeCall?.reject()">
+				<span class="glyphicon glyphicon-earphone"></span>
+			</button>
+		</div>
+		<div *ngIf="activeCallInfo.direction == 'out'">
+			<button type="button" class="btn btn-default btn-danger" title="Hangup" (click)="activeCall?.hangup()">
+				<span class="glyphicon glyphicon-earphone"></span>
+			</button>
+		</div>
+	</div>
 </div>
