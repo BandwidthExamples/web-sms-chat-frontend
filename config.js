@@ -21,8 +21,13 @@ System.config({
       "defaultExtension": "ts"
     }
   },
-  
+  meta:{
+    "bandwidth-webrtc": {
+      format: "global"
+    }
+  },
   map: {
+    "bandwidth-webrtc": "vendor/bandwidth-0.9.4.min.js",
     "angular2": "npm:angular2@2.0.0-beta.7",
     "ng2-file-upload": "npm:ng2-file-upload@1.0.0-beta.1",
     "reflect-metadata": "npm:reflect-metadata@0.1.3",
@@ -320,6 +325,3 @@ System.config({
   }
 });
 
-System.set("bandwidth-webrtc", System.newModule({
-    "default": window.BWClient
-}));

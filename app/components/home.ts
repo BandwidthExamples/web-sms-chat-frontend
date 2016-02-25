@@ -2,12 +2,12 @@ import {Component, Injector, Pipe, PipeTransform, OnDestroy, Directive, ElementR
 import {CanActivate} from "angular2/router";
 import {FORM_DIRECTIVES} from 'angular2/common';
 import {AuthProvider} from "../services/auth";
-import {BWClient, BWPhone, BWCall} from "bandwidth-webrtc";
 import {Store, Contact, Message, UserData} from "../services/store";
 import {Transport} from "../services/transport";
 import {PhoneProvider} from "../services/phone";
 import {MessagesView, MakeVisibleDirective} from "./messages";
 import {FILE_UPLOAD_DIRECTIVES, FileUploader} from "ng2-file-upload";
+
 
 
 @Directive({
@@ -43,8 +43,8 @@ export class HomeView implements OnDestroy {
   areMessagesLoading: boolean = false;
   errorString: string;
   uploader: FileUploader;
-  phone: BWPhone;
-  private _activeCall: BWCall;
+  phone: any;
+  private _activeCall: any;
 
   constructor(private store: Store, private transport: Transport, phoneProvider: PhoneProvider) {
     
@@ -146,11 +146,11 @@ export class HomeView implements OnDestroy {
     });
   }
   
-  get activeCall(): BWCall{
+  get activeCall(){
     return this._activeCall;
   }
   
-  set activeCall(call: BWCall){
+  set activeCall(call: any){
     this.hangup();
     this._activeCall = call;
     if(call){
