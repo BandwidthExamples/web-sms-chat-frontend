@@ -46,7 +46,7 @@ export class HomeView implements OnDestroy {
   phone: any;
   private _activeCall: any;
 
-  constructor(private store: Store, private transport: Transport, phoneProvider: PhoneProvider) {
+  constructor(private store: Store, private transport: Transport, phoneProvider: PhoneProvider, private element: ElementRef) {
     
     this.areMessagesLoading = true;
     this.uploader = new FileUploader({
@@ -116,7 +116,7 @@ export class HomeView implements OnDestroy {
     this.phone.register();
     this.phone.on("incomingCall", call => {
       this.activeCall = call;
-      this.activeCall.playRinging(); 
+      console.log(this.activeCallInfo);
     });
   }
 
@@ -152,9 +152,14 @@ export class HomeView implements OnDestroy {
   }
   
   set activeCall(call: any){
+    if(this._activeCall == call){
+      return;
+    }
     this.hangup();
     this._activeCall = call;
     if(call){
+      let audio = this.element.nativeElement.getElementsByTagName("audio")[0];
+      call.setRemoteAudioElement(audio);
       call.on("ended", () => this.activeCall = null);
     }
   }
@@ -186,12 +191,19 @@ export class HomeView implements OnDestroy {
     this.activeCall = this.phone.call(phoneNumber, {
       identity: this.userData.phoneNumber
     });
+    
   }
   
   hangup(){
-    if(this.activeCall){
-      this.activeCall.hangup();
-      this.activeCall = null;
+    let info = this.activeCallInfo;
+    if(this.activeCall && info.status !== "ended"){
+      if(this.activeCallInfo.direction === "in"){
+        this.activeCall.reject();  
+      }
+      else{
+        this.activeCall.hangup();
+      }
+      this._activeCall = null;
     }
   }
   

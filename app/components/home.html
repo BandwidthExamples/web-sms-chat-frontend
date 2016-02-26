@@ -1,3 +1,4 @@
+<audio id="remote-audio"></audio>
 <div class="conversation-container">
 	<div class="chat">
 		<div class="chat-title">
@@ -86,18 +87,11 @@
 	<div class="contact">{{getContactName(activeCallInfo.remoteId)}}</div>
 	<div class="status">{{activeCallInfo.status}}</div>
 	<div>
-		<div *ngIf="activeCallInfo.direction == 'in'">
-			<button type="button" class="btn btn-default btn-primary" title="Answer" (click)="activeCall?.accept()">
-				<span class="glyphicon glyphicon-earphone"></span>
-			</button>
-			<button type="button" class="btn btn-default btn-danger" title="Reject" (click)="activeCall?.reject()">
-				<span class="glyphicon glyphicon-earphone"></span>
-			</button>
-		</div>
-		<div *ngIf="activeCallInfo.direction == 'out'">
-			<button type="button" class="btn btn-default btn-danger" title="Hangup" (click)="activeCall?.hangup()">
-				<span class="glyphicon glyphicon-earphone"></span>
-			</button>
-		</div>
+		<button type="button" class="btn btn-default btn-primary" title="Answer" (click)="activeCall?.accept()" *ngIf="activeCallInfo.direction == 'in'">
+		   <span class="glyphicon glyphicon-earphone"></span>
+		</button>
+		<button type="button" class="btn btn-default btn-danger" title="Hangup" (click)="hangup()">
+		   <span class="glyphicon glyphicon-earphone"></span>
+		</button>
 	</div>
 </div>
