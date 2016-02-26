@@ -84,7 +84,8 @@
 	</div>
 </div>
 <div class="call-container" *ngIf="activeCall">
-	<div class="contact">{{getContactName(activeCallInfo.remoteId)}}</div>
+	<div class="contact" *ngIf="activeCallInfo.direction == 'out'">{{getContactName(activeCallInfo.remoteId)}}</div>
+	<div class="contact" *ngIf="activeCallInfo.direction == 'in'">{{activeCallInfo.remoteName}}</div>
 	<div class="status">{{activeCallInfo.status}}</div>
 	<div>
 		<button type="button" class="btn btn-default btn-primary" title="Answer" (click)="activeCall?.accept()" *ngIf="activeCallInfo.direction == 'in'">
