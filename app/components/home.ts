@@ -183,7 +183,9 @@ export class HomeView implements OnDestroy {
   }
   
   callTo(phoneNumber){
-    this.activeCall = this.phone.call(phoneNumber);
+    this.activeCall = this.phone.call(phoneNumber, {
+      identity: this.userData.phoneNumber
+    });
   }
   
   hangup(){
