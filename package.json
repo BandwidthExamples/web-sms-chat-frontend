@@ -2,8 +2,8 @@
   "name": "web-sms-frontend",
   "version": "0.0.2",
   "scripts": {
-    "build": "tsc && gulp",
-    "server": "live-server",
+    "build": "jspm bundle app --inject && gzip -9 build.js",
+    "start": "live-server",
     "install": "jspm install"
   },
   "author": "avbel",
