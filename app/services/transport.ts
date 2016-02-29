@@ -28,6 +28,7 @@ export class Transport {
       this.socket.addEventListener("close", (ev) => {
         console.error(`WebSocket connection has been closed with code ${ev.code}`);
         this.socket = null;
+        this.execute("reconnect").then(() => console.log("Websocket connection was restored"));
       });
     });
   }
