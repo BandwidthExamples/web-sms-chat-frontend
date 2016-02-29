@@ -14,12 +14,12 @@ class FormatTimePipe implements PipeTransform {
 @Directive({
   selector: "[makeVisible]"
 })
-export class MakeVisibleDirective{
-  constructor(private element: ElementRef){
+export class MakeVisibleDirective {
+  constructor(private element: ElementRef) {
   }
-  
-  @Input() set makeVisible(val: boolean){
-    if(val){
+
+  @Input() set makeVisible(val: boolean) {
+    if (val) {
       setTimeout(() => this.element.nativeElement.scrollIntoView(), 200);
     }
   }
@@ -56,8 +56,8 @@ export class MessageView {
     }
     return false;
   }
-  
-  getAttachment(url: string): void{
+
+  getAttachment(url: string): void {
     if (isFunction(this.messages.getAttachment)) {
       this.messages.getAttachment(url);
     }
@@ -68,17 +68,17 @@ export class MessageView {
   selector: "messages",
   inputs: ["items"],
   templateUrl: "app/components/messages.html",
-  directives: [MessageView, MakeVisibleDirective], 
+  directives: [MessageView, MakeVisibleDirective],
   styleUrls: ["styles/messages.css"],
   encapsulation: ViewEncapsulation.None
 })
 export class MessagesView {
-  @Input() getContactName: (phoneNumber: string) => string
-  @Input() selectContact: (phoneNumber: string) => void
-  @Input() canMakeVisible: (item: any) => boolean
-  @Input() getAttachment: (url: string) => void
-  
-  checkCanMakeVisible(item: any): boolean{
+  @Input() getContactName: (phoneNumber: string) => string;
+  @Input() selectContact: (phoneNumber: string) => void;
+  @Input() canMakeVisible: (item: any) => boolean;
+  @Input() getAttachment: (url: string) => void;
+
+  checkCanMakeVisible(item: any): boolean {
     if (isFunction(this.canMakeVisible)) {
       return this.canMakeVisible(item);
     }

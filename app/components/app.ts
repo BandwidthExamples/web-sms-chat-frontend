@@ -5,7 +5,6 @@ import {AuthProvider} from "../services/auth";
 import {Transport} from "../services/transport";
 import {PhoneProvider} from "../services/phone";
 import {SignInView} from "../components/signIn";
-import {ContactsView} from "./contacts";
 import {HomeView} from "./home";
 
 @Component({
@@ -16,8 +15,7 @@ import {HomeView} from "./home";
 })
 @RouteConfig([
   { path: "/", as: "Home", component: HomeView},
-  { path: "/signin",  as: "SignIn",  component: SignInView },
-  { path: "/contacts",  as: "Contacts",  component: ContactsView }
+  { path: "/signin",  as: "SignIn",  component: SignInView }
 ])
 export class SmsApp {
   constructor(private authProvider: AuthProvider) {

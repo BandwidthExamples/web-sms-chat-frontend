@@ -2,7 +2,7 @@ import {EventEmitter} from "angular2/core";
 
 export class Transport {
 
-  commandTimeout: number = 60; //timeout of execution a command in seconds
+  commandTimeout: number = 60; // timeout of execution a command in seconds
   authData: AuthData;
   private socket: WebSocket;
 
@@ -35,7 +35,7 @@ export class Transport {
 
 
   execute(command: string, data: any = null): Promise<any> {
-    return this.initSocket().then(()=>{
+    return this.initSocket().then(() => {
       return new Promise((resolve, reject) => {
         const id = Math.random();
         const successEventName = `${command}.success.${id}`;
@@ -43,18 +43,18 @@ export class Transport {
 
         let isCompleted = false;
         let subscription = this.dataReceived.subscribe((ev: DataReceivedEvent) => {
-          if (ev.eventName != successEventName && ev.eventName != errorEventName) {
+          if (ev.eventName !== successEventName && ev.eventName !== errorEventName) {
             return;
           }
           isCompleted = true;
           subscription.unsubscribe();
-          if (ev.eventName == successEventName) {
+          if (ev.eventName === successEventName) {
             resolve(ev.data);
           }
           else {
             reject(ev.data);
           }
-        })
+        });
         this.socket.send(JSON.stringify({
           auth: this.authData,
           command: command,
@@ -72,9 +72,9 @@ export class Transport {
   }
 
   private buildWebSocketUrl(): string {
-    let protocol = "ws:"
-    if (window.location.protocol == "https:") {
-      protocol = "wss:"
+    let protocol = "ws:";
+    if (window.location.protocol === "https:") {
+      protocol = "wss:";
     }
     return `${protocol}//${window.location.host}/smschat`;
   }
@@ -87,6 +87,6 @@ export interface AuthData {
 }
 
 export interface DataReceivedEvent {
-  eventName: string,
-  data: any
+  eventName: string;
+  data: any;
 }

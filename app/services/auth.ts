@@ -7,7 +7,7 @@ export class AuthProvider {
   constructor(private transport: Transport, private router: Router) {
     transport.authData = JSON.parse(window.localStorage.getItem("authData"));
   }
-  
+
   signIn(authData: AuthData): Promise<void> {
     return this.transport.execute("signIn", authData).then((data) => {
       this.transport.authData = authData;
@@ -16,17 +16,17 @@ export class AuthProvider {
       return data;
     });
   }
-  
-  checkIfAuthentificated(): Promise<boolean>{
-    if(this.transport.authData){
+
+  checkIfAuthentificated(): Promise<boolean> {
+    if (this.transport.authData) {
       return Promise.resolve(true);
     }
     this.router.navigate(["SignIn"]);
     return Promise.resolve(false);
   }
-  
-  static appInstance: AuthProvider; //global instance (to use it in attributes)
-  
+
+  static appInstance: AuthProvider; // global instance (to use it in attributes)
+
 }
 
 
