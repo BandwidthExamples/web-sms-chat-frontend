@@ -45,7 +45,7 @@ export class HomeView implements OnDestroy {
   private _activeCall: any;
 
   constructor(private store: Store, private transport: Transport, phoneProvider: PhoneProvider, private element: ElementRef) {
-    
+
     this.areMessagesLoading = true;
     this.uploader = new FileUploader({
       url: "/upload",
@@ -109,7 +109,7 @@ export class HomeView implements OnDestroy {
          }
        }
     });
-    
+
     this.phone = phoneProvider.createPhone();
     this.phone.register();
     this.phone.on("incomingCall", call => {
@@ -144,11 +144,11 @@ export class HomeView implements OnDestroy {
       return selectedNumbers.indexOf(m.from) >= 0 || selectedNumbers.indexOf(m.to) >= 0;
     });
   }
-  
+
   get activeCall(){
     return this._activeCall;
   }
-  
+
   set activeCall(call: any){
     if(this._activeCall == call){
       return;
@@ -161,15 +161,15 @@ export class HomeView implements OnDestroy {
       call.on("ended", () => this.activeCall = null);
     }
   }
-  
+
   get activeCallInfo(){
     if(this.activeCall){
       return this.activeCall.getInfo();
     }
     return {};
   }
-  
-  
+
+
   getContactName: (phoneNumber: string) => string;
   selectContact: (phoneNumber: string) => void;
   showAttachment: (url: string) => void;
@@ -184,28 +184,29 @@ export class HomeView implements OnDestroy {
       this.uploader.clearQueue();
     }, this.showError.bind(this));
   }
-  
+
   callTo(phoneNumber){
     this.activeCall = this.phone.call(phoneNumber, {
       identity: this.userData.phoneNumber
     });
-    
+
   }
-  
+
   hangup(){
     let info = this.activeCallInfo;
     if(this.activeCall && info.status !== "ended"){
       if(this.activeCallInfo.direction === "in"){
-        this.activeCall.reject();  
+        if(info.status === "connecting"){
+          this.activeCall.reject();
+          return;
+        }
       }
-      else{
-        this.activeCall.hangup();
-      }
+      this.activeCall.hangup();
       this._activeCall = null;
     }
   }
-  
-  
+
+
 
   private showError(err: any): void{
     this.errorString = err.message || err;
