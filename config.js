@@ -3,32 +3,30 @@ System.config({
   defaultJSExtensions: true,
   transpiler: "typescript",
   typescriptOptions: {
-    "module": "commonjs",
-    "sourceMap": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "removeComments": false,
-    "noImplicitAny": false
+    "tsconfig": true,
+    "module": "system"
   },
   paths: {
     "npm:*": "jspm_packages/npm/*",
     "github:*": "jspm_packages/github/*"
   },
-
+  
   packages: {
     "app": {
       "main": "bootstrap",
       "defaultExtension": "ts"
     }
   },
-  meta:{
+
+  meta: {
     "bandwidth-webrtc": {
-      format: "global"
+      "format": "global"
     }
   },
+
   map: {
-    "bandwidth-webrtc": "vendor/bandwidth-0.9.4.js",
     "angular2": "npm:angular2@2.0.0-beta.7",
+    "bandwidth-webrtc": "vendor/bandwidth-0.9.4.js",
     "ng2-file-upload": "npm:ng2-file-upload@1.0.0-beta.1",
     "reflect-metadata": "npm:reflect-metadata@0.1.3",
     "typescript": "npm:typescript@1.8.2",
@@ -324,4 +322,3 @@ System.config({
     }
   }
 });
-

@@ -8,8 +8,6 @@ import {PhoneProvider} from "../services/phone";
 import {MessagesView, MakeVisibleDirective} from "./messages";
 import {FILE_UPLOAD_DIRECTIVES, FileUploader} from "ng2-file-upload";
 
-
-
 @Directive({
   selector: "[setFocus]"
 })
