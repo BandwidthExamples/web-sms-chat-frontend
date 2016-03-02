@@ -104,7 +104,7 @@ export class HomeView implements OnDestroy {
          else{
            (<any>message).isNew = true; // to make it visible
            this.messages.push(message);
-           notificationProvider.showNotification(`Message from ${this.getContactName(message.from)}`, {body: message.text});
+           notificationProvider.showNotification(`Message from ${this.getContactName(message.from) || message.from }`, {body: message.text});
          }
        }
     });
