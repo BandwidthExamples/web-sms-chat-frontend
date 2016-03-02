@@ -1,5 +1,5 @@
 import {Injectable} from "angular2/core";
-import {BWClient} from "bandwidth-webrtc";
+import "bandwidth-webrtc";
 
 
 @Injectable()
@@ -7,7 +7,7 @@ export class PhoneProvider {
 
   createPhone(): any {
     let userData = JSON.parse(window.localStorage.getItem("userData"));
-    let phone = BWClient.createPhone({
+    let phone = (<any>window).BWClient.createPhone({
       username: userData.userName,
       domain: userData.domain,
       authToken: userData.authToken,
