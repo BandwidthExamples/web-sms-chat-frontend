@@ -2,6 +2,8 @@
 
 Frontend for web-based chat application that features Catapult SMS and MMS capabilities.
 
+Use it together with [backend on C#](https://github.com/BandwidthExamples/csharp-web-sms-chat) or [backend on NodeJS](https://github.com/BandwidthExamples/node-web-sms-chat)
+
 
 ## Build
 
