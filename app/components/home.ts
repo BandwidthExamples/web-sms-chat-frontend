@@ -5,6 +5,7 @@ import {AuthProvider} from "../services/auth";
 import {Store, Contact, Message, UserData} from "../services/store";
 import {Transport} from "../services/transport";
 import {PhoneProvider} from "../services/phone";
+import {NotificationsProvider} from "../services/notification";
 import {MessagesView, MakeVisibleDirective} from "./messages";
 import {FILE_UPLOAD_DIRECTIVES, FileUploader} from "ng2-file-upload";
 
@@ -44,8 +45,7 @@ export class HomeView implements OnDestroy {
   phone: any;
   private _activeCall: any;
 
-  constructor(private store: Store, private transport: Transport, phoneProvider: PhoneProvider, private element: ElementRef) {
-
+  constructor(private store: Store, private transport: Transport, phoneProvider: PhoneProvider, private element: ElementRef, notificationProvider: NotificationsProvider) {
     this.areMessagesLoading = true;
     this.uploader = new FileUploader({
       url: "/upload",
@@ -106,6 +106,7 @@ export class HomeView implements OnDestroy {
         else {
           (<any>message).isNew = true; // to make it visible
           this.messages.push(message);
+          notificationProvider.showNotification(`Message from ${this.getContactName(message.from)}`, {body: message.text});
         }
       }
     });
