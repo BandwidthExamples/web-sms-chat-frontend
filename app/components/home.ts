@@ -4,6 +4,7 @@ import {FORM_DIRECTIVES} from 'angular2/common';
 import {AuthProvider} from "../services/auth";
 import {Store, Contact, Message, UserData} from "../services/store";
 import {Transport} from "../services/transport";
+import {NotificationsProvider} from "../services/notification";
 import {MessagesView, MakeVisibleDirective} from "./messages";
 import {FILE_UPLOAD_DIRECTIVES, FileUploader} from "../../node_modules/ng2-file-upload";
 
@@ -42,7 +43,7 @@ export class HomeView implements OnDestroy {
   errorString: string;
   uploader: FileUploader;
 
-  constructor(private store: Store, private transport: Transport) {
+  constructor(private store: Store, private transport: Transport, notificationProvider: NotificationsProvider) {
     this.areMessagesLoading = true;
     this.uploader = new FileUploader({
       url: "/upload",
@@ -103,6 +104,7 @@ export class HomeView implements OnDestroy {
          else{
            (<any>message).isNew = true; // to make it visible
            this.messages.push(message);
+           notificationProvider.showNotification(`Message from ${this.getContactName(message.from)}`, {body: message.text});
          }
        }
     });
