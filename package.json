@@ -26,11 +26,6 @@
     },
     "devDependencies": {
       "typescript": "npm:typescript@^1.8.2"
-    },
-    "overrides": {
-      "npm:isemail@1.2.0": {
-        "main": "../isemil.js"
-      }
     }
   }
 }
