@@ -84,10 +84,13 @@ export class HomeView implements OnDestroy {
     };
 
     this.showAttachment = (url) => {
-      //add auth data
+      window.open(this.getAttachmentUrl(url));
+    };
+
+    this.getAttachmentUrl = (url) => {
       url = url.replace("https://", `https://${this.transport.authData.apiToken}:${this.transport.authData.apiSecret}@`);
       url = url.replace("http://", `http://${this.transport.authData.apiToken}:${this.transport.authData.apiSecret}@`);
-      window.open(url);
+      return url;
     };
 
     //handle incoming messages (and state of sent messages)
@@ -138,6 +141,7 @@ export class HomeView implements OnDestroy {
   getContactName: (phoneNumber: string) => string;
   selectContact: (phoneNumber: string) => void;
   showAttachment: (url: string) => void;
+  getAttachmentUrl: (url: string) => string;
 
   sendMessage(){
     this.newMessage.to = this.selectedContacts[0].phoneNumber

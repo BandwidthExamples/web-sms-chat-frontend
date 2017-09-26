@@ -66,7 +66,7 @@
   color: #676767;
 }
 
-.message .attachments{
+.message .attachments, .message .image-attachments{
   list-style: none;
   margin: 0;
   padding: 0;
@@ -77,13 +77,24 @@
   padding: 1px;
 }
 
+.message .image-attachments li{
+  display: block;
+  padding: 1px;
+}
+
+.message .image-attachments li img{
+  max-width: 96px;
+  max-height: 64px;
+  cursor: pointer;
+}
+
 message{
   display: flex;
 }
 
 .contact-link{
   font-size: 0.7rem;
-  font-weight: bold; 
+  font-weight: bold;
   padding: 0px 1px;
   border: none;
   margin-bottom: 2px;

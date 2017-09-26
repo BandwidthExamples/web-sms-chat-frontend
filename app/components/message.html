@@ -8,10 +8,15 @@
 		<span *ngIf="item.direction == 'out'"> • to <button class="btn btn-link btn-xs contact-link" (click)="selectContact(item.to)">{{getContactName(item.to)}}</button></span>
 	</time>
 	<ul *ngIf="item.media?.length > 0" class="attachments">
-		<li *ngFor="#url of item.media">
+		<li *ngFor="#url of item.media | nonImages">
 			<button class="btn btn-xs btn-default" (click)="getAttachment(url)">
 				<span class="glyphicon glyphicon-paperclip"></span>
 			</button>
+		</li>
+	</ul>
+	<ul *ngIf="item.media?.length > 0" class="image-attachments">
+		<li *ngFor="#url of item.media | images">
+			<img alt="attachment" [src]="url | blob | async" class="preview" (click)="getAttachment(url)">
 		</li>
 	</ul>
 </div>
