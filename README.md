@@ -1,4 +1,9 @@
-# web-sms-chat-frontend
+<div align="center">
+
+# Web SMS Chat Frontend
+
+<a href="http://dev.bandwidth.com"><img src="https://s3.amazonaws.com/bwdemos/BW_Messaging.png"/></a>
+</div>
 
 Frontend for web-based chat application that features Catapult SMS and MMS capabilities.
 
